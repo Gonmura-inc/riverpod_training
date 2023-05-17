@@ -13,9 +13,10 @@ class TasksScreen extends HookConsumerWidget {
       ),
       body: Container(),
       floatingActionButton: FloatingActionButton(
+          tooltip: "新しいタスクを作成",
           child: const Icon(Icons.add),
           onPressed: () {
-            context.pushNamed(AppRoute.newTask.name);
+            context.goNamed(AppRoute.newTask.name);
           }),
     );
   }

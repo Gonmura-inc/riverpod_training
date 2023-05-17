@@ -8,7 +8,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_router.g.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 enum AppRoute {
   tasks,
@@ -23,20 +22,21 @@ GoRouter goRouter(GoRouterRef ref) {
     debugLogDiagnostics: true,
     routes: [
       GoRoute(
-        path: '/tasks',
-        name: AppRoute.tasks.name,
-        pageBuilder: (context, state) {
-          return const NoTransitionPage(child: TasksScreen());
-        },
-      ),
-      GoRoute(
-        path: '/newTask',
-        name: AppRoute.newTask.name,
-        pageBuilder: (context, state) {
-          return const MaterialPage(
-              fullscreenDialog: true, child: NewTaskScreen());
-        },
-      ),
+          path: '/tasks',
+          name: AppRoute.tasks.name,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: TasksScreen());
+          },
+          routes: [
+            GoRoute(
+              path: 'new_task',
+              name: AppRoute.newTask.name,
+              pageBuilder: (context, state) {
+                return const MaterialPage(
+                    fullscreenDialog: true, child: NewTaskScreen());
+              },
+            ),
+          ]),
     ],
   );
 }
