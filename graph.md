@@ -1,4 +1,3 @@
-riverpod_training ...
 flowchart TB
   subgraph Arrows
     direction LR
@@ -28,7 +27,7 @@ flowchart TB
   tasksStreamProvider[[tasksStreamProvider]];
   taskRepoProvider -.-> tasksStreamProvider;
   taskRepoProvider[[taskRepoProvider]];
-  userFirestoreProvider ==> taskRepoProvider;
+  userFirestoreProvider -.-> taskRepoProvider;
   userFirestoreProvider[[userFirestoreProvider]];
   firestoreProvider -.-> userFirestoreProvider;
   firestoreProvider[[firestoreProvider]];

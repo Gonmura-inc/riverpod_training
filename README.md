@@ -69,7 +69,7 @@ flowchart TB
   tasksStreamProvider[[tasksStreamProvider]];
   taskRepoProvider -.-> tasksStreamProvider;
   taskRepoProvider[[taskRepoProvider]];
-  userFirestoreProvider ==> taskRepoProvider;
+  userFirestoreProvider -.-> taskRepoProvider;
   userFirestoreProvider[[userFirestoreProvider]];
   firestoreProvider -.-> userFirestoreProvider;
   firestoreProvider[[firestoreProvider]];

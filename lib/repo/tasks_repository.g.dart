@@ -24,7 +24,11 @@ final userFirestoreProvider =
 typedef UserFirestoreRef = AutoDisposeProviderRef<CollectionReference<Task>>;
 String _$tasksStreamHash() => r'0844d0ce3573f118fbe714665c083bfd68ab2127';
 
-/// See also [tasksStream].
+///taskListをstreamで持っているBasicProviderを定義しないと、
+///view側から呼べないから作る必要あり
+///上記のtaskRepoプロバイダーのstateはあくまでuserFireStoreだからね。
+///
+/// Copied from [tasksStream].
 @ProviderFor(tasksStream)
 final tasksStreamProvider = AutoDisposeStreamProvider<List<Task>>.internal(
   tasksStream,
@@ -36,7 +40,7 @@ final tasksStreamProvider = AutoDisposeStreamProvider<List<Task>>.internal(
 );
 
 typedef TasksStreamRef = AutoDisposeStreamProviderRef<List<Task>>;
-String _$taskRepoHash() => r'6b085ae10bc63573d614f4fbefdb168558b4fec8';
+String _$taskRepoHash() => r'46e4828cc1c6486db4f83758801a6767393ee667';
 
 /// See also [TaskRepo].
 @ProviderFor(TaskRepo)

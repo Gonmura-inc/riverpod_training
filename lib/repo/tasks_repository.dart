@@ -26,7 +26,7 @@ class TaskRepo extends _$TaskRepo {
 
   @override
   CollectionReference<Task> build() {
-    return ref.watch(userFirestoreProvider);
+    return ref.read(userFirestoreProvider);
   }
 
   Stream<List<Task>> watchTasks() {
