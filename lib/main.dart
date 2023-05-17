@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/firebase_options.dart';
 import 'package:riverpod_training/routing/app_router.dart';
-import 'package:riverpod_training/routing/router_enum.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print(AppRoute.tasks.path);
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
