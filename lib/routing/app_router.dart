@@ -1,7 +1,7 @@
 // private navigators
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_training/routing/router_enum.dart';
+import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/view/new_task_page.dart';
 import 'package:riverpod_training/view/tasks_page.dart';
 // ignore: depend_on_referenced_packages
@@ -26,7 +26,7 @@ GoRouter goRouter(GoRouterRef ref) {
         },
         routes: [
           GoRoute(
-            path: AppRoute.tasks.path,
+            path: AppRoute.newTask.path,
             name: AppRoute.newTask.name,
             pageBuilder: (context, state) {
               return const MaterialPage(

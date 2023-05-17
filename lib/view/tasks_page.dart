@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:riverpod_training/repo/tasks_repository.dart';
 
-import '../routing/router_enum.dart';
+import '../config/utils/enum/router_enum.dart';
 
 class TasksScreen extends ConsumerWidget {
   const TasksScreen({super.key});
@@ -17,16 +17,10 @@ class TasksScreen extends ConsumerWidget {
       body: ref.watch(tasksStreamProvider).when(data: (data) {
         return ListView.separated(
           itemBuilder: (context, index) {
-            if (index == 0 || index == data.length + 1) {
-              return const SizedBox.shrink();
-            }
             return ListTile(
-              title: Text(data[index - 1].title),
-              trailing: Text(data[index - 1]
-                  .createdAt
-                  .toDate()
-                  .toString()
-                  .substring(0, 10)),
+              title: Text(data[index].title),
+              trailing: Text(
+                  data[index].createdAt.toDate().toString().substring(0, 10)),
             );
           },
           separatorBuilder: (context, index) => const Divider(height: 0.5),

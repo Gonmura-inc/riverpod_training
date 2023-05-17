@@ -44,6 +44,8 @@ dependencies:
   flutter_hooks: ^0.18.6
   cloud_firestore: ^4.7.1
   uuid: ^3.0.7
+  firebase_auth:
+  firebase_storage:
 
 
 dev_dependencies:

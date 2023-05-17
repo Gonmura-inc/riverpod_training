@@ -4,10 +4,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
+import 'package:riverpod_training/repo/tasks_repository.dart';
 
 import 'package:uuid/uuid.dart';
 
-import '../routing/router_enum.dart';
+import '../config/utils/enum/router_enum.dart';
 
 class NewTaskScreen extends HookConsumerWidget {
   const NewTaskScreen({super.key});
@@ -72,10 +73,9 @@ class NewTaskScreen extends HookConsumerWidget {
         title: title,
         createdAt: Timestamp.now(),
       );
-      //firebaseのtasksコレクションにタスクを追加
-      final FirebaseFirestore db = FirebaseFirestore.instance;
-      //taskコレクションのtaskIdドキュメントを作成、中身に作成したtaskクラスのインスタンスを格納する
-      await db.collection("tasks").doc(newTask.taskId).set(newTask.toJson());
+
+      ref.read(taskRepoProvider.notifier).addTask(newTask);
+
       context.goNamed(AppRoute.tasks.name);
     } catch (e) {
       print(e.toString());
