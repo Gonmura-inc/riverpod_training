@@ -8,25 +8,19 @@ import 'package:riverpod_training/data_models/task/task.dart';
 part 'tasks_repository.g.dart';
 
 @riverpod
-CollectionReference<Task> userFirestore(UserFirestoreRef ref) {
-  return ref
-      .read(firestoreProvider)
-      .collection(FirebaseKey.taskCollection)
-      .withConverter(
-        fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
-        toFirestore: (value, _) => value.toJson(),
-      );
-}
-
-@riverpod
 class TaskRepo extends _$TaskRepo {
   ///このproviderのstateは
-  ///上記で書いたuserFireStoreです
+  ///上記で書いたCollectionReferenceです
   ///つまりstate.doc()とかstate.add()とかでメソッドかけます
-
   @override
   CollectionReference<Task> build() {
-    return ref.read(userFirestoreProvider);
+    return ref
+        .read(firestoreProvider)
+        .collection(FirebaseKey.taskCollection)
+        .withConverter<Task>(
+          fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
+          toFirestore: (Task value, _) => value.toJson(),
+        );
   }
 
   Stream<List<Task>> watchTasks() {

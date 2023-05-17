@@ -6,22 +6,6 @@ part of 'tasks_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userFirestoreHash() => r'a7534349ce7eef4832552d292249d7aa9268c343';
-
-/// See also [userFirestore].
-@ProviderFor(userFirestore)
-final userFirestoreProvider =
-    AutoDisposeProvider<CollectionReference<Task>>.internal(
-  userFirestore,
-  name: r'userFirestoreProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$userFirestoreHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef UserFirestoreRef = AutoDisposeProviderRef<CollectionReference<Task>>;
 String _$tasksStreamHash() => r'0844d0ce3573f118fbe714665c083bfd68ab2127';
 
 ///taskListをstreamで持っているBasicProviderを定義しないと、
@@ -40,7 +24,7 @@ final tasksStreamProvider = AutoDisposeStreamProvider<List<Task>>.internal(
 );
 
 typedef TasksStreamRef = AutoDisposeStreamProviderRef<List<Task>>;
-String _$taskRepoHash() => r'46e4828cc1c6486db4f83758801a6767393ee667';
+String _$taskRepoHash() => r'4fbd3a2daf738d80dde49f81953e12fd1d32125a';
 
 /// See also [TaskRepo].
 @ProviderFor(TaskRepo)
