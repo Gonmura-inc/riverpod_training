@@ -22,7 +22,6 @@ GoRouter goRouter(GoRouterRef ref) {
         path: AppRoute.tasks.path,
         name: AppRoute.tasks.name,
         pageBuilder: (context, state) {
-          print('ここきてる');
           return const NoTransitionPage(child: TasksScreen());
         },
         routes: [
