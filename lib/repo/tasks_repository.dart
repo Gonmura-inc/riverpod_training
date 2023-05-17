@@ -7,24 +7,16 @@ import 'package:riverpod_training/data_models/task/task.dart';
 
 part 'tasks_repository.g.dart';
 
-@riverpod
-class TaskRepo extends _$TaskRepo {
-  ///このproviderのstateは
-  ///上記で書いたCollectionReferenceです
-  ///つまりstate.doc()とかstate.add()とかでメソッドかけます
-  @override
-  CollectionReference<Task> build() {
-    return ref
-        .read(firestoreProvider)
-        .collection(FirebaseKey.taskCollection)
-        .withConverter<Task>(
-          fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
-          toFirestore: (Task value, _) => value.toJson(),
-        );
-  }
+class TaskRepo {
+  final db = FirebaseFirestore.instance
+      .collection(FirebaseKey.taskCollection)
+      .withConverter<Task>(
+        fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
+        toFirestore: (Task value, _) => value.toJson(),
+      );
 
   Stream<List<Task>> watchTasks() {
-    return state.orderBy('createdAt', descending: true).snapshots().map(
+    return db.orderBy('createdAt', descending: true).snapshots().map(
       (snapshot) {
         return snapshot.docs.map(
           (doc) {
@@ -36,7 +28,7 @@ class TaskRepo extends _$TaskRepo {
   }
 
   Future<void> addTask(Task addTaskData) async {
-    await state.doc(addTaskData.taskId).set(addTaskData);
+    await db.doc(addTaskData.taskId).set(addTaskData);
   }
 }
 
@@ -45,6 +37,6 @@ class TaskRepo extends _$TaskRepo {
 ///上記のtaskRepoプロバイダーのstateはあくまでuserFireStoreだからね。
 @riverpod
 Stream<List<Task>> tasksStream(TasksStreamRef ref) {
-  final repository = ref.read(taskRepoProvider.notifier);
-  return repository.watchTasks();
+  final TaskRepo taskRepo = TaskRepo();
+  return taskRepo.watchTasks();
 }
