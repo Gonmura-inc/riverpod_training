@@ -20,6 +20,10 @@ CollectionReference<Task> userFirestore(UserFirestoreRef ref) {
 
 @riverpod
 class TaskRepo extends _$TaskRepo {
+  ///このproviderのstateは
+  ///上記で書いたuserFireStoreです
+  ///つまりstate.doc()とかstate.add()とかでメソッドかけます
+
   @override
   CollectionReference<Task> build() {
     return ref.watch(userFirestoreProvider);
@@ -37,11 +41,14 @@ class TaskRepo extends _$TaskRepo {
     );
   }
 
-  void addTask(Task addTaskData) {
-    state.doc(addTaskData.taskId).set(addTaskData);
+  Future<void> addTask(Task addTaskData) async {
+    await state.doc(addTaskData.taskId).set(addTaskData);
   }
 }
 
+///taskListをstreamで持っているBasicProviderを定義しないと、
+///view側から呼べないから作る必要あり
+///上記のtaskRepoプロバイダーのstateはあくまでuserFireStoreだからね。
 @riverpod
 Stream<List<Task>> tasksStream(TasksStreamRef ref) {
   final repository = ref.read(taskRepoProvider.notifier);
