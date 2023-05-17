@@ -1,42 +1,41 @@
 // private navigators
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_training/view/new_task_screen.dart';
-import 'package:riverpod_training/view/tasks_screen.dart';
+import 'package:riverpod_training/routing/router_enum.dart';
+import 'package:riverpod_training/view/new_task_page.dart';
+import 'package:riverpod_training/view/tasks_page.dart';
+// ignore: depend_on_referenced_packages
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-enum AppRoute {
-  tasks,
-  newTask,
-}
-
-@riverpod
+@Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: '/tasks',
+    initialLocation: AppRoute.tasks.path,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     routes: [
       GoRoute(
-          path: '/tasks',
-          name: AppRoute.tasks.name,
-          pageBuilder: (context, state) {
-            return const NoTransitionPage(child: TasksScreen());
-          },
-          routes: [
-            GoRoute(
-              path: 'new_task',
-              name: AppRoute.newTask.name,
-              pageBuilder: (context, state) {
-                return const MaterialPage(
-                    fullscreenDialog: true, child: NewTaskScreen());
-              },
-            ),
-          ]),
+        path: AppRoute.tasks.path,
+        name: AppRoute.tasks.name,
+        pageBuilder: (context, state) {
+          print('ここきてる');
+          return const NoTransitionPage(child: TasksScreen());
+        },
+        routes: [
+          GoRoute(
+            path: AppRoute.tasks.path,
+            name: AppRoute.newTask.name,
+            pageBuilder: (context, state) {
+              return const MaterialPage(
+                  fullscreenDialog: true, child: NewTaskScreen());
+            },
+          ),
+        ],
+      ),
     ],
   );
 }

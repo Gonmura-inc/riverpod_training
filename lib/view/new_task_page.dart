@@ -4,9 +4,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
-import 'package:riverpod_training/routing/app_router.dart';
 
 import 'package:uuid/uuid.dart';
+
+import '../routing/router_enum.dart';
 
 class NewTaskScreen extends HookConsumerWidget {
   const NewTaskScreen({super.key});

@@ -1,1 +1,2 @@
 # riverpod_training
+FireStoreを用いてタスク追加をするだけのサンプルです。
