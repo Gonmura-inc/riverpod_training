@@ -4,6 +4,7 @@ FireStoreを用いてタスク追加をするだけのサンプルです。
 
 
 # 構成
+<pre>
 .
 ├── lib
 │   ├── config(設定周り)
@@ -43,7 +44,7 @@ FireStoreを用いてタスク追加をするだけのサンプルです。
     │   └── Icon-maskable-512.png
     ├── index.html
     └── manifest.json
-
+</pre>
 
 
 # Provider graph
