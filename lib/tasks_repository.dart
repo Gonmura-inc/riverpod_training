@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:riverpod_training/task.dart';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:riverpod_training/data_models/task/task.dart';
 
 part 'tasks_repository.g.dart';
 

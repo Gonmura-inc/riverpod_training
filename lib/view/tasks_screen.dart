@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod_training/app_router.dart';
+import 'package:riverpod_training/routing/app_router.dart';
+
 import 'package:riverpod_training/tasks_repository.dart';
 
 class TasksScreen extends HookConsumerWidget {
