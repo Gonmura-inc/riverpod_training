@@ -4,16 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/view/new_task_page.dart';
 import 'package:riverpod_training/view/tasks_page.dart';
-// ignore: depend_on_referenced_packages
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'app_router.g.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-@Riverpod(keepAlive: true)
-GoRouter goRouter(GoRouterRef ref) {
-  return GoRouter(
+class AppRouter {
+  static final goRouter = GoRouter(
     initialLocation: AppRoute.tasks.path,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
