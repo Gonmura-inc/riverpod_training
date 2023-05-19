@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:riverpod_training/config/firebase/firebase_provider.dart';
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
 
@@ -9,9 +10,10 @@ part 'tasks_repository.g.dart';
 @riverpod
 class TaskRepo extends _$TaskRepo {
   @override
-  build() {
-    return FirebaseFirestore.instance
-        .collection(FirebaseKey.taskCollection)
+  CollectionReference<Task> build() {
+    return ref
+        .read(firestoreProvider)
+        .collection(FirebaseTasksKey.taskCollection)
         .withConverter<Task>(
           fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
           toFirestore: (Task value, _) => value.toJson(),
@@ -19,13 +21,12 @@ class TaskRepo extends _$TaskRepo {
   }
 
   Stream<List<Task>> watchTasks() {
-    return FirebaseFirestore.instance
-        .collection(FirebaseKey.taskCollection)
+    return state
         .orderBy('createdAt', descending: true)
         .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        return Task.fromJson(doc.data());
+        .map((QuerySnapshot<Task> snapshot) {
+      return snapshot.docs.map((QueryDocumentSnapshot<Task> doc) {
+        return doc.data();
       }).toList();
     });
   }

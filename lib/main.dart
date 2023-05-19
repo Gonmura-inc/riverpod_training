@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/firebase/firebase_options.dart';
 import 'package:riverpod_training/routing/app_router.dart';
-import 'package:stack_trace/stack_trace.dart' as stack_trace;
+// ignore: depend_on_referenced_packages
+// import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,11 +13,11 @@ void main() async {
   );
 
   runApp(const ProviderScope(child: MyApp()));
-  FlutterError.demangleStackTrace = (StackTrace stack) {
-    if (stack is stack_trace.Trace) return stack.vmTrace;
-    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
-    return stack;
-  };
+  // FlutterError.demangleStackTrace = (StackTrace stack) {
+  //   if (stack is stack_trace.Trace) return stack.vmTrace;
+  //   if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
+  //   return stack;
+  // };
 }
 
 //stlと打つと stlConsumerという候補が出てくるので、それを押すとConsumerWidgetの雛形ができる

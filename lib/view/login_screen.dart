@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/data_models/account/account.dart';
 import 'package:riverpod_training/repo/auth/auth_repository.dart';
 import 'package:riverpod_training/repo/user/user_repository.dart';
-import 'package:uuid/uuid.dart';
 
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
@@ -30,6 +29,7 @@ class LoginScreen extends HookConsumerWidget {
               if (value == "") {
                 return "必須入力項目です";
               }
+              return null;
             },
           ),
           const Text('パスワード'),
@@ -39,6 +39,7 @@ class LoginScreen extends HookConsumerWidget {
               if (value == "") {
                 return "必須入力項目です";
               }
+              return null;
             },
           ),
           const SizedBox(height: 10),
@@ -82,14 +83,17 @@ class LoginScreen extends HookConsumerWidget {
     required TextEditingController emailController,
     required TextEditingController passwordController,
   }) async {
-    final String signInMessage = await ref.read(authRepoProvider).signIn(
-          emailController.text,
-          passwordController.text,
-        );
+    final String signInMessage =
+        await ref.read(authRepoProvider.notifier).signIn(
+              emailController.text,
+              passwordController.text,
+            );
     if (signInMessage != "success") {
       debugPrint(signInMessage);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(signInMessage)));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(signInMessage)));
+      }
       return;
     }
   }
@@ -99,10 +103,11 @@ class LoginScreen extends HookConsumerWidget {
     required TextEditingController emailController,
     required TextEditingController passwordController,
   }) async {
-    final String registerMessage = await ref.read(authRepoProvider).register(
-          emailController.text,
-          passwordController.text,
-        );
+    final String registerMessage =
+        await ref.read(authRepoProvider.notifier).register(
+              emailController.text,
+              passwordController.text,
+            );
     //サインインに成功した場合
     if (registerMessage == "success") {
       //ユーザー情報のインスタンスを作成

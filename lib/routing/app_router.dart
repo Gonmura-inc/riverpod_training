@@ -18,16 +18,18 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 GoRouter goRouter(GoRouterRef ref) {
   final authRepository = ref.watch(authRepoProvider);
   return GoRouter(
-    initialLocation: AppRoute.login.path,
+    initialLocation: AppRoute.tasks.path,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     redirect: (context, state) {
       final isLoggedIn = authRepository.currentUser != null;
       if (!isLoggedIn) {
         return AppRoute.login.path;
-      } else if (isLoggedIn && state.location.startsWith(AppRoute.login.path))
-        return AppRoute.tasks.path;
+      }
+      return null;
     },
+    //ログイン状態が変わった際に、自動的にredirect関数を再度呼び出させて、別画面に遷移させたい場合、refreshListenableを使用することで、可能になります。
+    //GoRouterRefreshStreamで囲うことでstreamを検知できる
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges()),
     routes: [
       GoRoute(

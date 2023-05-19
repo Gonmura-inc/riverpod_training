@@ -28,7 +28,7 @@ class TasksScreen extends ConsumerWidget {
             return ListTile(
               title: Text(data[index].title),
               trailing: Text(
-                  data[index].createdAt.toDate().toString().substring(0, 10)),
+                  data[index].createdAt.toDate().toString().substring(0, 16)),
             );
           },
           separatorBuilder: (context, index) => const Divider(height: 0.5),
@@ -37,7 +37,7 @@ class TasksScreen extends ConsumerWidget {
       }, loading: () {
         return const Center(child: CircularProgressIndicator());
       }, error: (error, __) {
-        print(error);
+        debugPrint(error.toString());
         return const Center(child: Text('エラーだよ'));
       }),
       floatingActionButton: FloatingActionButton(

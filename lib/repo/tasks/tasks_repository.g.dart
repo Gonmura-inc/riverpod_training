@@ -24,12 +24,12 @@ final tasksStreamProvider = AutoDisposeStreamProvider<List<Task>>.internal(
 );
 
 typedef TasksStreamRef = AutoDisposeStreamProviderRef<List<Task>>;
-String _$taskRepoHash() => r'891f5fd978b2dccbf48584967818752d181c72bf';
+String _$taskRepoHash() => r'a9dd692df282741eb26ba2e7817eb6dd3206d021';
 
 /// See also [TaskRepo].
 @ProviderFor(TaskRepo)
 final taskRepoProvider =
-    AutoDisposeNotifierProvider<TaskRepo, dynamic>.internal(
+    AutoDisposeNotifierProvider<TaskRepo, CollectionReference<Task>>.internal(
   TaskRepo.new,
   name: r'taskRepoProvider',
   debugGetCreateSourceHash:
@@ -38,5 +38,5 @@ final taskRepoProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$TaskRepo = AutoDisposeNotifier<dynamic>;
+typedef _$TaskRepo = AutoDisposeNotifier<CollectionReference<Task>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
