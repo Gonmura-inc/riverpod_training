@@ -1,7 +1,10 @@
-class FirebaseKey {
+class FirebaseUserKey {
   static String userCollection = 'users';
+}
+
+class FirebaseTasksKey {
   static String taskCollection = 'tasks';
   static String taskId = 'taskId';
-  // static String isDone = 'isDone';
-  // static String title = 'title';
+  static String createdAt = 'createdAt';
+  static String title = 'title';
 }

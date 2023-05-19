@@ -6,7 +6,7 @@ part of 'tasks_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tasksStreamHash() => r'd5500d95d7904a33e2100fd4a463e07a96d2961f';
+String _$tasksStreamHash() => r'3e136375a3a74421ce6c0570124a76d79f01a194';
 
 ///taskListをstreamで持っているBasicProviderを定義しないと、
 ///view側から呼べないから作る必要あり
@@ -24,12 +24,12 @@ final tasksStreamProvider = AutoDisposeStreamProvider<List<Task>>.internal(
 );
 
 typedef TasksStreamRef = AutoDisposeStreamProviderRef<List<Task>>;
-String _$taskRepoHash() => r'd8026783b4fcc981c87773dea27398743294845b';
+String _$taskRepoHash() => r'5c20b0afca9009a773d7b7f0d8a1f58162fa8ed6';
 
 /// See also [TaskRepo].
 @ProviderFor(TaskRepo)
 final taskRepoProvider =
-    AutoDisposeNotifierProvider<TaskRepo, dynamic>.internal(
+    AutoDisposeNotifierProvider<TaskRepo, CollectionReference<Task>>.internal(
   TaskRepo.new,
   name: r'taskRepoProvider',
   debugGetCreateSourceHash:
@@ -38,5 +38,5 @@ final taskRepoProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$TaskRepo = AutoDisposeNotifier<dynamic>;
+typedef _$TaskRepo = AutoDisposeNotifier<CollectionReference<Task>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

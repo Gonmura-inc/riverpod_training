@@ -9,9 +9,9 @@ part 'tasks_repository.g.dart';
 @riverpod
 class TaskRepo extends _$TaskRepo {
   @override
-  build() {
+  CollectionReference<Task> build() {
     return FirebaseFirestore.instance
-        .collection(FirebaseKey.taskCollection)
+        .collection(FirebaseTasksKey.taskCollection)
         .withConverter<Task>(
           fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
           toFirestore: (Task value, _) => value.toJson(),
@@ -19,10 +19,13 @@ class TaskRepo extends _$TaskRepo {
   }
 
   Stream<List<Task>> watchTasks() {
-    return state.orderBy('createdAt', descending: true).snapshots().map(
-      (snapshot) {
+    return state
+        .orderBy(FirebaseTasksKey.createdAt, descending: true)
+        .snapshots()
+        .map(
+      (QuerySnapshot<Task> snapshot) {
         return snapshot.docs.map(
-          (doc) {
+          (QueryDocumentSnapshot<Task> doc) {
             return doc.data();
           },
         ).toList();
@@ -40,6 +43,5 @@ class TaskRepo extends _$TaskRepo {
 ///上記のtaskRepoプロバイダーのstateはあくまでuserFireStoreだからね。
 @riverpod
 Stream<List<Task>> tasksStream(TasksStreamRef ref) {
-  final taskRepo = ref.watch(taskRepoProvider);
-  return taskRepo.watchTasks();
+  return ref.read(taskRepoProvider.notifier).watchTasks();
 }
