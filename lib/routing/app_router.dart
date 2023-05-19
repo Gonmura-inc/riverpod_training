@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
+import 'package:riverpod_training/view/login_screen.dart';
 import 'package:riverpod_training/view/new_task_page.dart';
 import 'package:riverpod_training/view/tasks_page.dart';
 // ignore: depend_on_referenced_packages
@@ -14,10 +15,20 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 @Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: AppRoute.tasks.path,
+    initialLocation: AppRoute.login.path,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
+    redirect: (context, state) {
+      return null;
+    },
     routes: [
+      GoRoute(
+        path: AppRoute.login.path,
+        name: AppRoute.login.name,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: LoginScreen());
+        },
+      ),
       GoRoute(
         path: AppRoute.tasks.path,
         name: AppRoute.tasks.name,

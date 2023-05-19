@@ -1,4 +1,5 @@
 enum AppRoute {
+  login,
   tasks,
   newTask,
 }
@@ -6,6 +7,8 @@ enum AppRoute {
 extension AppRouteExtention on AppRoute {
   String get path {
     switch (this) {
+      case AppRoute.login:
+        return "/login";
       case AppRoute.tasks:
         return "/tasks";
       case AppRoute.newTask:
