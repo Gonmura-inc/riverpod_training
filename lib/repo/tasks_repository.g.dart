@@ -6,7 +6,7 @@ part of 'tasks_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tasksStreamHash() => r'd5500d95d7904a33e2100fd4a463e07a96d2961f';
+String _$tasksStreamHash() => r'1e02cf86c610b34d1648a68a5d021a753467f2e0';
 
 ///taskListをstreamで持っているBasicProviderを定義しないと、
 ///view側から呼べないから作る必要あり

@@ -1,20 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'task.dart';
+part of 'account.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
-      taskId: json['taskId'] as String,
-      title: json['title'] as String,
+_$_Account _$$_AccountFromJson(Map<String, dynamic> json) => _$_Account(
+      userId: json['userId'] as String,
+      email: json['email'] as String,
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
     );
 
-Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
-      'taskId': instance.taskId,
-      'title': instance.title,
+Map<String, dynamic> _$$_AccountToJson(_$_Account instance) =>
+    <String, dynamic>{
+      'userId': instance.userId,
+      'email': instance.email,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
     };
