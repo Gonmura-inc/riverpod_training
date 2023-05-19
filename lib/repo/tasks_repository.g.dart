@@ -24,4 +24,19 @@ final tasksStreamProvider = AutoDisposeStreamProvider<List<Task>>.internal(
 );
 
 typedef TasksStreamRef = AutoDisposeStreamProviderRef<List<Task>>;
+String _$taskRepoHash() => r'd8026783b4fcc981c87773dea27398743294845b';
+
+/// See also [TaskRepo].
+@ProviderFor(TaskRepo)
+final taskRepoProvider =
+    AutoDisposeNotifierProvider<TaskRepo, dynamic>.internal(
+  TaskRepo.new,
+  name: r'taskRepoProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$taskRepoHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TaskRepo = AutoDisposeNotifier<dynamic>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

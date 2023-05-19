@@ -73,9 +73,9 @@ class NewTaskScreen extends HookConsumerWidget {
         title: title,
         createdAt: Timestamp.now(),
       );
+      await ref.read(taskRepoProvider.notifier).addTask(newTask);
 
-      TaskRepo().addTask(newTask);
-
+      // ignore: use_build_context_synchronously
       context.goNamed(AppRoute.tasks.name);
     } catch (e) {
       print(e.toString());
