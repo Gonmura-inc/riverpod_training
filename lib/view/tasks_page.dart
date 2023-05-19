@@ -36,7 +36,8 @@ class TasksScreen extends ConsumerWidget {
         );
       }, loading: () {
         return const CircularProgressIndicator();
-      }, error: (_, __) {
+      }, error: (error, __) {
+        print(error);
         return const Center(child: Text('エラーだよ'));
       }),
       floatingActionButton: FloatingActionButton(

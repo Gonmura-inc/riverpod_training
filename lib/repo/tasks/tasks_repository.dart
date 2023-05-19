@@ -19,15 +19,15 @@ class TaskRepo extends _$TaskRepo {
   }
 
   Stream<List<Task>> watchTasks() {
-    return state.orderBy('createdAt', descending: true).snapshots().map(
-      (snapshot) {
-        return snapshot.docs.map(
-          (doc) {
-            return doc.data();
-          },
-        ).toList();
-      },
-    );
+    return FirebaseFirestore.instance
+        .collection(FirebaseKey.taskCollection)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        return Task.fromJson(doc.data());
+      }).toList();
+    });
   }
 
   Future<void> addTask(Task addTaskData) async {
@@ -40,6 +40,5 @@ class TaskRepo extends _$TaskRepo {
 ///上記のtaskRepoプロバイダーのstateはあくまでuserFireStoreだからね。
 @riverpod
 Stream<List<Task>> tasksStream(TasksStreamRef ref) {
-  final taskRepo = ref.watch(taskRepoProvider);
-  return taskRepo.watchTasks();
+  return ref.watch(taskRepoProvider.notifier).watchTasks();
 }
