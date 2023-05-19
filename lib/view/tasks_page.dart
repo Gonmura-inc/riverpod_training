@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:riverpod_training/repo/tasks_repository.dart';
+import 'package:riverpod_training/repo/tasks/tasks_repository.dart';
 
 import '../config/utils/enum/router_enum.dart';
 
