@@ -35,7 +35,7 @@ final authStateChangesProvider = AutoDisposeStreamProvider<User?>.internal(
 );
 
 typedef AuthStateChangesRef = AutoDisposeStreamProviderRef<User?>;
-String _$authRepoHash() => r'826efb80e78295005f0523bda0d8b59ae3fbb538';
+String _$authRepoHash() => r'e6b6c687f6c5a9f42cee067314e5928b2430d9a5';
 
 /// See also [AuthRepo].
 @ProviderFor(AuthRepo)

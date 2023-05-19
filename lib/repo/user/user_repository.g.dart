@@ -1,23 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_router.dart';
+part of 'user_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$goRouterHash() => r'22f28a2a6e03e763fa122dfe9187cc60ef541171';
+String _$userRepoHash() => r'3e77648ae70a8fdc4cd99210672061cf40ec82a6';
 
-/// See also [goRouter].
-@ProviderFor(goRouter)
-final goRouterProvider = Provider<GoRouter>.internal(
-  goRouter,
-  name: r'goRouterProvider',
+/// See also [UserRepo].
+@ProviderFor(UserRepo)
+final userRepoProvider =
+    AutoDisposeNotifierProvider<UserRepo, dynamic>.internal(
+  UserRepo.new,
+  name: r'userRepoProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$goRouterHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$userRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef GoRouterRef = ProviderRef<GoRouter>;
+typedef _$UserRepo = AutoDisposeNotifier<dynamic>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/data_models/account/account.dart';
 import 'package:riverpod_training/repo/auth/auth_repository.dart';
+import 'package:riverpod_training/repo/user/user_repository.dart';
 import 'package:uuid/uuid.dart';
 
 class LoginScreen extends HookConsumerWidget {
@@ -108,11 +110,12 @@ class LoginScreen extends HookConsumerWidget {
     //サインインに成功した場合
     if (registerMessage == "success") {
       //ユーザー情報のインスタンスを作成
+      final User currentUser = ref.read(authRepoProvider.notifier).currentUser!;
       final Account account = Account(
-          userId: const Uuid().v4(),
+          userId: currentUser.uid,
           email: emailController.text,
           createdAt: Timestamp.now());
-      await ref.read(authRepoProvider.notifier).createUser(account);
+      await ref.read(userRepoProvider.notifier).createUser(account);
     } else {
       debugPrint(registerMessage);
       return;

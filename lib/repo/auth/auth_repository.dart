@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/config/firebase/firebase_auth_error_text.dart';
-import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
 import 'package:riverpod_training/data_models/account/account.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 part 'auth_repository.g.dart';
@@ -12,14 +10,7 @@ part 'auth_repository.g.dart';
 class AuthRepo extends _$AuthRepo {
   final _auth = FirebaseAuth.instance;
   @override
-  build() {
-    return FirebaseFirestore.instance
-        .collection(FirebaseKey.userCollection)
-        .withConverter<Account>(
-          fromFirestore: (snapshot, _) => Account.fromJson(snapshot.data()!),
-          toFirestore: (Account value, _) => value.toJson(),
-        );
-  }
+  build() {}
 
   Future<String> signIn(String email, String password) async {
     try {
