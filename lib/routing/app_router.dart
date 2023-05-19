@@ -23,11 +23,10 @@ GoRouter goRouter(GoRouterRef ref) {
     debugLogDiagnostics: true,
     redirect: (context, state) {
       final isLoggedIn = authRepository.currentUser != null;
-      if (isLoggedIn) {
-        return AppRoute.tasks.path;
-      } else {
+      if (!isLoggedIn) {
         return AppRoute.login.path;
-      }
+      } else if (isLoggedIn && state.location.startsWith(AppRoute.login.path))
+        return AppRoute.tasks.path;
     },
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges()),
     routes: [
