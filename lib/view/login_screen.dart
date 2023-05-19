@@ -82,11 +82,10 @@ class LoginScreen extends HookConsumerWidget {
     required TextEditingController emailController,
     required TextEditingController passwordController,
   }) async {
-    final String signInMessage =
-        await ref.read(authRepoProvider.notifier).signIn(
-              emailController.text,
-              passwordController.text,
-            );
+    final String signInMessage = await ref.read(authRepoProvider).signIn(
+          emailController.text,
+          passwordController.text,
+        );
     if (signInMessage != "success") {
       debugPrint(signInMessage);
       ScaffoldMessenger.of(context)
@@ -102,15 +101,14 @@ class LoginScreen extends HookConsumerWidget {
     required TextEditingController emailController,
     required TextEditingController passwordController,
   }) async {
-    final String registerMessage =
-        await ref.read(authRepoProvider.notifier).register(
-              emailController.text,
-              passwordController.text,
-            );
+    final String registerMessage = await ref.read(authRepoProvider).register(
+          emailController.text,
+          passwordController.text,
+        );
     //サインインに成功した場合
     if (registerMessage == "success") {
       //ユーザー情報のインスタンスを作成
-      final User currentUser = ref.read(authRepoProvider.notifier).currentUser!;
+      final User currentUser = ref.read(authRepoProvider).currentUser!;
       final Account account = Account(
           userId: currentUser.uid,
           email: emailController.text,

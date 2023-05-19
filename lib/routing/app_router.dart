@@ -16,10 +16,20 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
+  final authRepository = ref.watch(authRepoProvider);
   return GoRouter(
     initialLocation: AppRoute.login.path,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
+    redirect: (context, state) {
+      final isLoggedIn = authRepository.currentUser != null;
+      if (isLoggedIn) {
+        return AppRoute.tasks.path;
+      } else {
+        return AppRoute.login.path;
+      }
+    },
+    refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges()),
     routes: [
       GoRoute(
         path: AppRoute.login.path,

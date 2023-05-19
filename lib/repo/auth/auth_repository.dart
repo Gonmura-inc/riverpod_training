@@ -6,11 +6,9 @@ import 'package:riverpod_training/data_models/account/account.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 part 'auth_repository.g.dart';
 
-@riverpod
-class AuthRepo extends _$AuthRepo {
-  final _auth = FirebaseAuth.instance;
-  @override
-  build() {}
+class AuthRepo {
+  AuthRepo(this._auth);
+  final FirebaseAuth _auth;
 
   Future<String> signIn(String email, String password) async {
     try {
@@ -43,10 +41,6 @@ class AuthRepo extends _$AuthRepo {
     await _auth.signOut();
   }
 
-  Future<void> createUser(Account newUser) async {
-    await state.doc(newUser.userId).set(newUser);
-  }
-
   Stream<User?> authStateChanges() => _auth.authStateChanges();
   User? get currentUser => _auth.currentUser;
 }
@@ -54,6 +48,11 @@ class AuthRepo extends _$AuthRepo {
 @Riverpod(keepAlive: true)
 FirebaseAuth firebaseAuth(FirebaseAuthRef ref) {
   return FirebaseAuth.instance;
+}
+
+@Riverpod(keepAlive: true)
+AuthRepo authRepo(AuthRepoRef ref) {
+  return AuthRepo(ref.watch(firebaseAuthProvider));
 }
 
 @riverpod

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_training/repo/auth/auth_repository.dart';
 import 'package:riverpod_training/repo/tasks/tasks_repository.dart';
 
 import '../config/utils/enum/router_enum.dart';
@@ -12,6 +13,14 @@ class TasksScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("タスク一覧画面"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _signOut(ref: ref);
+            },
+            icon: const Icon(Icons.logout),
+          )
+        ],
       ),
       body: ref.watch(tasksStreamProvider).when(data: (data) {
         return ListView.separated(
@@ -37,5 +46,9 @@ class TasksScreen extends ConsumerWidget {
         },
       ),
     );
+  }
+
+  void _signOut({required WidgetRef ref}) {
+    ref.read(authRepoProvider).signOut();
   }
 }
