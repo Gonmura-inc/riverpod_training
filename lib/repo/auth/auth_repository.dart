@@ -26,7 +26,7 @@ class AuthRepo extends _$AuthRepo {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return "success";
     } on FirebaseAuthException catch (e) {
-      debugPrint(e.message);
+      debugPrint(e.code);
       return FirebaseAuthErrorExt.fromCode(e.code).message;
     } catch (e) {
       return e.toString();
@@ -36,9 +36,12 @@ class AuthRepo extends _$AuthRepo {
   Future<String> register(String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       return "success";
     } on FirebaseAuthException catch (e) {
+      print(e.code);
       return FirebaseAuthErrorExt.fromCode(e.code).message;
     } catch (e) {
       return e.toString();

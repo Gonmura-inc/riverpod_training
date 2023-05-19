@@ -48,6 +48,7 @@ class LoginScreen extends HookConsumerWidget {
                     if (formKey.currentState!.validate()) {
                       _signIn(
                         ref: ref,
+                        context: context,
                         emailController: emailController,
                         passwordController: passwordController,
                       );
@@ -75,6 +76,7 @@ class LoginScreen extends HookConsumerWidget {
 
   void _signIn({
     required WidgetRef ref,
+    required BuildContext context,
     required TextEditingController emailController,
     required TextEditingController passwordController,
   }) async {
@@ -85,6 +87,9 @@ class LoginScreen extends HookConsumerWidget {
             );
     if (signInMessage != "success") {
       debugPrint(signInMessage);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(signInMessage)));
+      return;
     }
     emailController.clear();
     passwordController.clear();
@@ -110,6 +115,7 @@ class LoginScreen extends HookConsumerWidget {
       await ref.read(authRepoProvider.notifier).createUser(account);
     } else {
       debugPrint(registerMessage);
+      return;
     }
     emailController.clear();
     passwordController.clear();

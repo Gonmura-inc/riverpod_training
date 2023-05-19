@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
+import 'package:riverpod_training/repo/auth/auth_repository.dart';
+import 'package:riverpod_training/routing/go_router_refresh_stream.dart';
 import 'package:riverpod_training/view/login_screen.dart';
 import 'package:riverpod_training/view/new_task_page.dart';
 import 'package:riverpod_training/view/tasks_page.dart';
@@ -18,9 +20,6 @@ GoRouter goRouter(GoRouterRef ref) {
     initialLocation: AppRoute.login.path,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
-    redirect: (context, state) {
-      return null;
-    },
     routes: [
       GoRoute(
         path: AppRoute.login.path,
