@@ -92,8 +92,6 @@ class LoginScreen extends HookConsumerWidget {
           .showSnackBar(SnackBar(content: Text(signInMessage)));
       return;
     }
-    emailController.clear();
-    passwordController.clear();
   }
 
   void _register({
@@ -118,7 +116,5 @@ class LoginScreen extends HookConsumerWidget {
       debugPrint(registerMessage);
       return;
     }
-    emailController.clear();
-    passwordController.clear();
   }
 }

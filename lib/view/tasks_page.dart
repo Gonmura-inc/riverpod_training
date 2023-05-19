@@ -35,7 +35,7 @@ class TasksScreen extends ConsumerWidget {
           itemCount: data.length,
         );
       }, loading: () {
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       }, error: (error, __) {
         print(error);
         return const Center(child: Text('エラーだよ'));
