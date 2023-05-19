@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,20 +22,21 @@ class TasksScreen extends ConsumerWidget {
             return const CircularProgressIndicator();
           }
           if (snapshot.hasData) {
-            final List<Task> data = snapshot.data!;
+            final List<Task> taskList = snapshot.data!;
+
             return ListView.separated(
               itemBuilder: (context, index) {
+                final Task taskData = taskList[index];
                 return ListTile(
-                  title: Text(data[index].title),
-                  trailing: Text(data[index]
-                      .createdAt
-                      .toDate()
-                      .toString()
-                      .substring(0, 10)),
+                  title: Text(taskData.title),
+                  trailing: Text(
+                      taskData.createdAt.toDate().toString().substring(0, 10)),
                 );
               },
-              separatorBuilder: (context, index) => const Divider(height: 0.5),
-              itemCount: data.length,
+              separatorBuilder: (context, index) {
+                return const Divider();
+              },
+              itemCount: taskList.length,
             );
           }
           return const Center(child: Text('エラーだよ'));

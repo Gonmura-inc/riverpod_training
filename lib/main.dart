@@ -26,6 +26,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
+      // theme: ThemeData(appBarTheme: AppBarTheme(color: Colors.pink)),
       routerConfig: AppRouter.goRouter,
       debugShowCheckedModeBanner: false,
     );

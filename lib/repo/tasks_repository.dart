@@ -5,7 +5,7 @@ import 'package:riverpod_training/data_models/task/task.dart';
 
 class TaskRepo {
   final db = FirebaseFirestore.instance
-      .collection(FirebaseKey.taskCollection)
+      .collection(FirebaseTaskKey.taskCollection)
       .withConverter<Task>(
         fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
         toFirestore: (Task value, _) => value.toJson(),
@@ -13,12 +13,20 @@ class TaskRepo {
 
   Stream<List<Task>> watchTasks() {
     return db.orderBy('createdAt', descending: true).snapshots().map(
-      (snapshot) {
+      (QuerySnapshot<Task> snapshot) {
         return snapshot.docs.map(
-          (doc) {
+          (QueryDocumentSnapshot<Task> doc) {
             return doc.data();
           },
         ).toList();
+      },
+    );
+  }
+
+  Stream<Task> watchTask() {
+    return db.doc('docId').snapshots().map(
+      (DocumentSnapshot<Task> snapshot) {
+        return snapshot.data()!;
       },
     );
   }

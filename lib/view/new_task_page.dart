@@ -15,6 +15,7 @@ class NewTaskScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final taskTitleController = useTextEditingController();
+
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(title: const Text("新しいタスクを追加")),
@@ -46,7 +47,6 @@ class NewTaskScreen extends HookConsumerWidget {
                   if (formKey.currentState!.validate()) {
                     _createNewTask(
                       context: context,
-                      ref: ref,
                       title: taskTitleController.text,
                     );
                   }
@@ -62,7 +62,6 @@ class NewTaskScreen extends HookConsumerWidget {
 
   void _createNewTask({
     required BuildContext context,
-    required WidgetRef ref,
     required String title,
   }) async {
     //taskデータクラスのインスタンスを作成
