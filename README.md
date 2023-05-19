@@ -8,6 +8,7 @@ FireStoreを用いてタスク追加をするだけのサンプルです。
 lib
 ├── config
 │   ├── firebase
+│   │   ├── firebase_auth_error_text.dart
 │   │   ├── firebase_options.dart
 │   │   ├── firebase_provider.dart
 │   │   └── firebase_provider.g.dart
@@ -17,6 +18,10 @@ lib
 │       └── keys
 │           └── firebase_key.dart
 ├── data_models
+│   ├── account
+│   │   ├── account.dart
+│   │   ├── account.freezed.dart
+│   │   └── account.g.dart
 │   ├── task
 │   │   ├── task.dart
 │   │   ├── task.freezed.dart
@@ -24,12 +29,21 @@ lib
 │   └── timestamp_converter.dart
 ├── main.dart
 ├── repo
-│   ├── tasks_repository.dart
-│   └── tasks_repository.g.dart
+│   ├── auth
+│   │   ├── auth_repository.dart
+│   │   └── auth_repository.g.dart
+│   ├── tasks
+│   │   ├── tasks_repository.dart
+│   │   └── tasks_repository.g.dart
+│   └── user
+│       ├── user_repository.dart
+│       └── user_repository.g.dart
 ├── routing
 │   ├── app_router.dart
-│   └── app_router.g.dart
+│   ├── app_router.g.dart
+│   └── go_router_refresh_stream.dart
 └── view
+    ├── login_screen.dart
     ├── new_task_page.dart
     └── tasks_page.dart
 </pre>
@@ -63,14 +77,26 @@ flowchart TB
   goRouterProvider ==> MyApp;
   TasksScreen((TasksScreen));
   tasksStreamProvider ==> TasksScreen;
+  authRepoProvider -.-> TasksScreen;
+  LoginScreen((LoginScreen));
+  authRepoProvider -.-> LoginScreen;
+  authRepoProvider -.-> LoginScreen;
+  authRepoProvider -.-> LoginScreen;
+  userRepoProvider -.-> LoginScreen;
   NewTaskScreen((NewTaskScreen));
   taskRepoProvider -.-> NewTaskScreen;
   goRouterProvider[[goRouterProvider]];
+  authRepoProvider ==> goRouterProvider;
   tasksStreamProvider[[tasksStreamProvider]];
-  taskRepoProvider -.-> tasksStreamProvider;
+  taskRepoProvider ==> tasksStreamProvider;
+  authRepoProvider[[authRepoProvider]];
+  firebaseAuthProvider -.-> authRepoProvider;
+  userRepoProvider[[userRepoProvider]];
+  firestoreProvider -.-> userRepoProvider;
   taskRepoProvider[[taskRepoProvider]];
-  userFirestoreProvider -.-> taskRepoProvider;
-  userFirestoreProvider[[userFirestoreProvider]];
-  firestoreProvider -.-> userFirestoreProvider;
+  firestoreProvider -.-> taskRepoProvider;
   firestoreProvider[[firestoreProvider]];
+  authStateChangesProvider[[authStateChangesProvider]];
+  authRepoProvider ==> authStateChangesProvider;
+  firebaseAuthProvider[[firebaseAuthProvider]];
 ```

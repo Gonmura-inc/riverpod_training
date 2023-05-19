@@ -1,3 +1,4 @@
+Analyzing /Users/yoshidamitsuteru/workspace/3.yoshida-test/riverpod_training ...
 flowchart TB
   subgraph Arrows
     direction LR
@@ -21,13 +22,25 @@ flowchart TB
   goRouterProvider ==> MyApp;
   TasksScreen((TasksScreen));
   tasksStreamProvider ==> TasksScreen;
+  authRepoProvider -.-> TasksScreen;
+  LoginScreen((LoginScreen));
+  authRepoProvider -.-> LoginScreen;
+  authRepoProvider -.-> LoginScreen;
+  authRepoProvider -.-> LoginScreen;
+  userRepoProvider -.-> LoginScreen;
   NewTaskScreen((NewTaskScreen));
   taskRepoProvider -.-> NewTaskScreen;
   goRouterProvider[[goRouterProvider]];
+  authRepoProvider ==> goRouterProvider;
   tasksStreamProvider[[tasksStreamProvider]];
-  taskRepoProvider -.-> tasksStreamProvider;
+  taskRepoProvider ==> tasksStreamProvider;
+  authRepoProvider[[authRepoProvider]];
+  firebaseAuthProvider -.-> authRepoProvider;
+  userRepoProvider[[userRepoProvider]];
+  firestoreProvider -.-> userRepoProvider;
   taskRepoProvider[[taskRepoProvider]];
-  userFirestoreProvider -.-> taskRepoProvider;
-  userFirestoreProvider[[userFirestoreProvider]];
-  firestoreProvider -.-> userFirestoreProvider;
+  firestoreProvider -.-> taskRepoProvider;
   firestoreProvider[[firestoreProvider]];
+  authStateChangesProvider[[authStateChangesProvider]];
+  authRepoProvider ==> authStateChangesProvider;
+  firebaseAuthProvider[[firebaseAuthProvider]];
