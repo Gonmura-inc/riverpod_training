@@ -6,7 +6,7 @@ part of 'auth_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authStateChangesHash() => r'8a60d5e0487f1fe75e9563469588ec39ead21fe0';
+String _$authStateChangesHash() => r'32b55faf1eb5e02d7b25d1000f98cf09485d682c';
 
 /// See also [authStateChanges].
 @ProviderFor(authStateChanges)
@@ -21,11 +21,11 @@ final authStateChangesProvider = AutoDisposeStreamProvider<User?>.internal(
 );
 
 typedef AuthStateChangesRef = AutoDisposeStreamProviderRef<User?>;
-String _$authRepoHash() => r'809f4da1a8f1444c14734af4584e99e8b359e688';
+String _$authRepoHash() => r'eb8d68e773bf97cd6c5c019d1f324ad175bd9a9c';
 
 /// See also [AuthRepo].
 @ProviderFor(AuthRepo)
-final authRepoProvider = NotifierProvider<AuthRepo, FirebaseAuth>.internal(
+final authRepoProvider = NotifierProvider<AuthRepo, User?>.internal(
   AuthRepo.new,
   name: r'authRepoProvider',
   debugGetCreateSourceHash:
@@ -34,5 +34,5 @@ final authRepoProvider = NotifierProvider<AuthRepo, FirebaseAuth>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$AuthRepo = Notifier<FirebaseAuth>;
+typedef _$AuthRepo = Notifier<User?>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

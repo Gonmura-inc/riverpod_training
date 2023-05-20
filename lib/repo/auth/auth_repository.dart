@@ -8,14 +8,18 @@ part 'auth_repository.g.dart';
 
 @Riverpod(keepAlive: true)
 class AuthRepo extends _$AuthRepo {
+  late FirebaseAuth auth;
   @override
-  FirebaseAuth build() {
-    return ref.read(firebaseAuthProvider);
+  User? build() {
+    auth = ref.read(firebaseAuthProvider);
+
+    return auth.currentUser;
   }
 
   Future<String> signIn(String email, String password) async {
     try {
-      await state.signInWithEmailAndPassword(email: email, password: password);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      state = auth.currentUser;
       return "success";
     } on FirebaseAuthException catch (e) {
       debugPrint(e.code);
@@ -27,10 +31,11 @@ class AuthRepo extends _$AuthRepo {
 
   Future<String> register(String email, String password) async {
     try {
-      await state.createUserWithEmailAndPassword(
+      await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      state = auth.currentUser;
       return "success";
     } on FirebaseAuthException catch (e) {
       debugPrint(e.code);
@@ -41,14 +46,19 @@ class AuthRepo extends _$AuthRepo {
   }
 
   Future<void> signOut() async {
-    await state.signOut();
+    await auth.signOut();
+    state = auth.currentUser;
   }
 
-  Stream<User?> authStateChanges() => state.authStateChanges();
-  User? get currentUser => state.currentUser;
+  Stream<User?> authStateChanges() {
+    return auth.authStateChanges().map((User? currentUser) {
+      state = currentUser;
+      return state;
+    });
+  }
 }
 
 @riverpod
 Stream<User?> authStateChanges(AuthStateChangesRef ref) {
-  return ref.watch(authRepoProvider).authStateChanges();
+  return ref.watch(authRepoProvider.notifier).authStateChanges();
 }
