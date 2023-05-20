@@ -111,7 +111,7 @@ class LoginScreen extends HookConsumerWidget {
     //サインインに成功した場合
     if (registerMessage == "success") {
       //ユーザー情報のインスタンスを作成
-      final User currentUser = ref.read(authRepoProvider).currentUser!;
+      final User currentUser = ref.read(authRepoProvider)!;
       final Account account = Account(
           userId: currentUser.uid,
           email: emailController.text,

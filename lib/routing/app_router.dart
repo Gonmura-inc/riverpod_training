@@ -1,4 +1,5 @@
 // private navigators
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
@@ -16,21 +17,21 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
-  final authRepository = ref.watch(authRepoProvider);
   return GoRouter(
     initialLocation: AppRoute.tasks.path,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     redirect: (context, state) {
-      final isLoggedIn = authRepository.currentUser != null;
-      if (!isLoggedIn) {
+      final User? currentUser = ref.read(authRepoProvider);
+      if (currentUser == null) {
         return AppRoute.login.path;
       }
       return null;
     },
     //ログイン状態が変わった際に、自動的にredirect関数を再度呼び出させて、別画面に遷移させたい場合、refreshListenableを使用することで、可能になります。
     //GoRouterRefreshStreamで囲うことでstreamを検知できる
-    refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges()),
+    refreshListenable: GoRouterRefreshStream(
+        ref.watch(authRepoProvider.notifier).authStateChanges()),
     routes: [
       GoRoute(
         path: AppRoute.login.path,

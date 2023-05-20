@@ -50,6 +50,6 @@ class TasksScreen extends ConsumerWidget {
   }
 
   void _signOut({required WidgetRef ref}) {
-    ref.read(authRepoProvider).signOut();
+    ref.read(authRepoProvider.notifier).signOut();
   }
 }
