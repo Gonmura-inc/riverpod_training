@@ -51,6 +51,7 @@ class AuthRepo extends _$AuthRepo {
   }
 
   Stream<User?> authStateChanges() {
+
     return auth.authStateChanges().map((User? currentUser) {
       state = currentUser;
       return state;
