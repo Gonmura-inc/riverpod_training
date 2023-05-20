@@ -1,4 +1,5 @@
 enum AppRoute {
+  login,
   tasks,
   newTask,
   auth,

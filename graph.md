@@ -23,15 +23,24 @@ flowchart TB
   TasksScreen((TasksScreen));
   tasksStreamProvider ==> TasksScreen;
   authRepoProvider -.-> TasksScreen;
+<<<<<<< HEAD
   AuthPage((AuthPage));
   authRepoProvider -.-> AuthPage;
   authRepoProvider -.-> AuthPage;
   authRepoProvider -.-> AuthPage;
   userRepoProvider -.-> AuthPage;
+=======
+  LoginScreen((LoginScreen));
+  authRepoProvider -.-> LoginScreen;
+  authRepoProvider -.-> LoginScreen;
+  authRepoProvider -.-> LoginScreen;
+  userRepoProvider -.-> LoginScreen;
+>>>>>>> main
   NewTaskScreen((NewTaskScreen));
   taskRepoProvider -.-> NewTaskScreen;
   goRouterProvider[[goRouterProvider]];
   authRepoProvider ==> goRouterProvider;
+<<<<<<< HEAD
   authRepoProvider -.-> goRouterProvider;
   authRepoProvider[[authRepoProvider]];
   firebaseAuthInstanceProvider -.-> authRepoProvider;
@@ -43,3 +52,17 @@ flowchart TB
   firebaseFireStoreInstanceProvider -.-> taskRepoProvider;
   firebaseFireStoreInstanceProvider[[firebaseFireStoreInstanceProvider]];
   firebaseAuthInstanceProvider[[firebaseAuthInstanceProvider]];
+=======
+  tasksStreamProvider[[tasksStreamProvider]];
+  taskRepoProvider ==> tasksStreamProvider;
+  authRepoProvider[[authRepoProvider]];
+  firebaseAuthProvider -.-> authRepoProvider;
+  userRepoProvider[[userRepoProvider]];
+  firestoreProvider -.-> userRepoProvider;
+  taskRepoProvider[[taskRepoProvider]];
+  firestoreProvider -.-> taskRepoProvider;
+  firestoreProvider[[firestoreProvider]];
+  authStateChangesProvider[[authStateChangesProvider]];
+  authRepoProvider ==> authStateChangesProvider;
+  firebaseAuthProvider[[firebaseAuthProvider]];
+>>>>>>> main
