@@ -1,7 +1,7 @@
 enum AppRoute {
-  auth,
   tasks,
   newTask,
+  auth,
 }
 
 extension AppRouteExtention on AppRoute {

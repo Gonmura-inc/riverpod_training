@@ -24,7 +24,7 @@ final tasksStreamProvider = AutoDisposeStreamProvider<List<Task>>.internal(
 );
 
 typedef TasksStreamRef = AutoDisposeStreamProviderRef<List<Task>>;
-String _$taskRepoHash() => r'3ec0929e95bf69e93cb5d9043014a096e01cb7e8';
+String _$taskRepoHash() => r'78b07cfadf1e3a7261424dd40ea3329cd9b32506';
 
 /// See also [TaskRepo].
 @ProviderFor(TaskRepo)

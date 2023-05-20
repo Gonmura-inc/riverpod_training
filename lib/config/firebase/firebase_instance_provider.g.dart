@@ -1,27 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'firebase_provider.dart';
+part of 'firebase_instance_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$firestoreInstanceHash() => r'0fecb4e6d455b30ea5351b3b63ca5817bd54cc44';
+String _$firebaseFireStoreInstanceHash() =>
+    r'cd8523576af557c9282a786123ac239ab83bf535';
 
-/// See also [firestoreInstance].
-@ProviderFor(firestoreInstance)
-final firestoreInstanceProvider =
+/// See also [firebaseFireStoreInstance].
+@ProviderFor(firebaseFireStoreInstance)
+final firebaseFireStoreInstanceProvider =
     AutoDisposeProvider<FirebaseFirestore>.internal(
-  firestoreInstance,
-  name: r'firestoreInstanceProvider',
+  firebaseFireStoreInstance,
+  name: r'firebaseFireStoreInstanceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$firestoreInstanceHash,
+      : _$firebaseFireStoreInstanceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef FirestoreInstanceRef = AutoDisposeProviderRef<FirebaseFirestore>;
+typedef FirebaseFireStoreInstanceRef
+    = AutoDisposeProviderRef<FirebaseFirestore>;
 String _$firebaseAuthInstanceHash() =>
     r'9072d11dc51c4031d27640ff73171ae97eef1193';
 

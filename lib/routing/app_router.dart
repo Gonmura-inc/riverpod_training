@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
+import 'package:riverpod_training/repo/auth/auth_repo.dart';
+import 'package:riverpod_training/routing/go_router_refresh_streaml.dart';
 import 'package:riverpod_training/view/auth_page.dart';
+
 import 'package:riverpod_training/view/new_task_page.dart';
 import 'package:riverpod_training/view/tasks_page.dart';
 // ignore: depend_on_referenced_packages
@@ -12,12 +15,24 @@ part 'app_router.g.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-@Riverpod(keepAlive: true)
+@riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
     initialLocation: AppRoute.tasks.path,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
+    redirect: (context, state) {
+      //ページ遷移のたびにここが読み込まれる
+      if (ref.read(authRepoProvider) == null) {
+        return AppRoute.auth.path;
+      }
+      return null;
+    },
+
+    ///右側のデータが変更されたら、redirect処理が走らせる
+    refreshListenable: GoRouterRefreshStream(
+      ref.watch(authRepoProvider.notifier).authStateChange(),
+    ),
     routes: [
       GoRoute(
         path: AppRoute.auth.path,
