@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/firebase/firebase_options.dart';
 import 'package:riverpod_training/routing/app_router.dart';
+// ignore: depend_on_referenced_packages
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 void main() async {
