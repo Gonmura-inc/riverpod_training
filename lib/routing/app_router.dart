@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
+import 'package:riverpod_training/view/auth_page.dart';
 import 'package:riverpod_training/view/new_task_page.dart';
 import 'package:riverpod_training/view/tasks_page.dart';
 // ignore: depend_on_referenced_packages
@@ -18,6 +19,13 @@ GoRouter goRouter(GoRouterRef ref) {
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     routes: [
+      GoRoute(
+        path: AppRoute.auth.path,
+        name: AppRoute.auth.name,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AuthPage());
+        },
+      ),
       GoRoute(
         path: AppRoute.tasks.path,
         name: AppRoute.tasks.name,

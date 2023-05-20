@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:riverpod_training/config/firebase/firebase_provider.dart';
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
 
@@ -10,7 +12,8 @@ part 'tasks_repository.g.dart';
 class TaskRepo extends _$TaskRepo {
   @override
   CollectionReference<Task> build() {
-    return FirebaseFirestore.instance
+    return ref
+        .read(firestoreInstanceProvider)
         .collection(FirebaseTasksKey.taskCollection)
         .withConverter<Task>(
           fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
