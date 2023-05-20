@@ -57,8 +57,3 @@ class AuthRepo extends _$AuthRepo {
     });
   }
 }
-
-@riverpod
-Stream<User?> authStateChanges(AuthStateChangesRef ref) {
-  return ref.watch(authRepoProvider.notifier).authStateChanges();
-}
