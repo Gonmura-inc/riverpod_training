@@ -24,6 +24,7 @@ class BottomNavigationPage extends ConsumerWidget {
           ),
         ],
         onTap: (int value) {
+          ref.read(bottomNaviSelectedIndexProvider.notifier).change(value);
           switch (value) {
             case 0:
               context.goNamed(AppRoute.tasks.name);

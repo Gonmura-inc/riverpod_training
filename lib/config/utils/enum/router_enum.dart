@@ -5,6 +5,7 @@ enum AppRoute {
   auth,
   editTask,
   mypage,
+  editMyPage,
 }
 
 extension AppRouteExtention on AppRoute {
@@ -20,6 +21,8 @@ extension AppRouteExtention on AppRoute {
         return "editTask";
       case AppRoute.mypage:
         return "/mypage";
+      case AppRoute.editMyPage:
+        return "editMyPage";
       default:
         return "/tasks";
     }

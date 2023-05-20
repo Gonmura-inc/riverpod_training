@@ -5,7 +5,7 @@ import 'package:riverpod_training/data_models/task/task.dart';
 import 'package:riverpod_training/repo/auth/auth_repo.dart';
 import 'package:riverpod_training/repo/task/task_repo.dart';
 
-import '../config/utils/enum/router_enum.dart';
+import '../../config/utils/enum/router_enum.dart';
 
 class TasksScreen extends ConsumerWidget {
   const TasksScreen({super.key});

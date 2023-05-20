@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
+import 'package:riverpod_training/routing/app_router.dart';
 
 part 'bottom_navi_provider.g.dart';
 
@@ -8,19 +9,18 @@ part 'bottom_navi_provider.g.dart';
 class BottomNaviSelectedIndex extends _$BottomNaviSelectedIndex {
   @override
   int build() {
-    return 0;
+    //現在のパス取得
+    final String currentPath = ref.read(goRouterProvider).location;
+    if (currentPath == AppRoute.tasks.path) {
+      return 0;
+    } else if (currentPath == AppRoute.mypage.path) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   void change(int index) {
     state = index;
-  }
-
-  void pathCheck(context) {
-    final String currentPath = GoRouterState.of(context).location;
-    if (currentPath == AppRoute.tasks.path) {
-      state = 0;
-    } else if (currentPath == AppRoute.mypage.path) {
-      state = 1;
-    }
   }
 }

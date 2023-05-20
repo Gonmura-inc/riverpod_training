@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/config/firebase/firebase_instance_provider.dart';
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
 import 'package:riverpod_training/data_models/account/account.dart';
+import 'package:riverpod_training/repo/auth/auth_repo.dart';
 
 part 'user_repo.g.dart';
 
@@ -68,4 +70,17 @@ class UserRepo extends _$UserRepo {
       },
     );
   }
+}
+
+@riverpod
+Stream<Account?> watchAccount(WatchAccountRef ref, String userId) {
+  return ref.watch(userRepoProvider.notifier).watchAccount(userId);
+}
+
+//自分のユーザードキュメントを監視するプロバイダー
+@riverpod
+Stream<Account?> watchMyAccount(WatchMyAccountRef ref) {
+  return ref
+      .watch(userRepoProvider.notifier)
+      .watchAccount(ref.watch(authRepoProvider)!.uid);
 }
