@@ -4,9 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/repo/auth/auth_repo.dart';
 import 'package:riverpod_training/routing/go_router_refresh_streaml.dart';
+import 'package:riverpod_training/view/add_or_edit_task_page.dart';
 import 'package:riverpod_training/view/auth_page.dart';
-
-import 'package:riverpod_training/view/new_task_page.dart';
 import 'package:riverpod_training/view/tasks_page.dart';
 // ignore: depend_on_referenced_packages
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -53,7 +52,20 @@ GoRouter goRouter(GoRouterRef ref) {
             name: AppRoute.newTask.name,
             pageBuilder: (context, state) {
               return const MaterialPage(
-                  fullscreenDialog: true, child: NewTaskScreen());
+                  fullscreenDialog: true, child: AddOrEditTaskPage());
+            },
+          ),
+          GoRoute(
+            path: AppRoute.editTask.path,
+            name: AppRoute.editTask.name,
+            pageBuilder: (context, state) {
+              final taskId = state.queryParameters['taskId'] as String;
+              return MaterialPage(
+                fullscreenDialog: true,
+                child: AddOrEditTaskPage(
+                  taskId: taskId,
+                ),
+              );
             },
           ),
         ],

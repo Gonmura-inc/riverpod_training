@@ -6,7 +6,7 @@ import 'package:riverpod_training/config/firebase/firebase_instance_provider.dar
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
 
-part 'tasks_repository.g.dart';
+part 'task_repo.g.dart';
 
 @riverpod
 class TaskRepo extends _$TaskRepo {
@@ -21,6 +21,7 @@ class TaskRepo extends _$TaskRepo {
         );
   }
 
+  //StreamでtaskListを取得
   Stream<List<Task>> watchTasks() {
     return state
         .orderBy(FirebaseTasksKey.createdAt, descending: true)
@@ -36,6 +37,36 @@ class TaskRepo extends _$TaskRepo {
     );
   }
 
+  //FutureでtaskListを取得
+  Future<List<Task>> getTasks() async {
+    final snapshot = await state.get();
+    return snapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+  //taskIDからドキュメント取得
+  Future<Task> getTask(String taskId) async {
+    final taskDoc = await state.doc(taskId).get();
+    return taskDoc.data()!;
+  }
+
+  //Streamでドキュメント取得
+  Stream<Task> watchTask(String taskId) {
+    return state.doc(taskId).snapshots().map(
+          (DocumentSnapshot<Task> snapshot) => snapshot.data()!,
+        );
+  }
+
+  //ドキュメント更新
+  Future<void> updateTask(Task updateTaskData) async {
+    await state.doc(updateTaskData.taskId).update(updateTaskData.toJson());
+  }
+
+  //ドキュメント削除
+  Future<void> deleteTask(String taskId) async {
+    await state.doc(taskId).delete();
+  }
+
+  //ドキュメント追加
   Future<void> addTask(Task addTaskData) async {
     await state.doc(addTaskData.taskId).set(addTaskData);
   }

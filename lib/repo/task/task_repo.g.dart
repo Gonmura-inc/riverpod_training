@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tasks_repository.dart';
+part of 'task_repo.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -24,7 +24,7 @@ final tasksStreamProvider = AutoDisposeStreamProvider<List<Task>>.internal(
 );
 
 typedef TasksStreamRef = AutoDisposeStreamProviderRef<List<Task>>;
-String _$taskRepoHash() => r'78b07cfadf1e3a7261424dd40ea3329cd9b32506';
+String _$taskRepoHash() => r'6de10e18801c9c0f113ae9d29fe8b74a82d877c9';
 
 /// See also [TaskRepo].
 @ProviderFor(TaskRepo)

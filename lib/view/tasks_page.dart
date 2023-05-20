@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_training/data_models/task/task.dart';
 import 'package:riverpod_training/repo/auth/auth_repo.dart';
-
-import 'package:riverpod_training/repo/tasks/tasks_repository.dart';
+import 'package:riverpod_training/repo/task/task_repo.dart';
 
 import '../config/utils/enum/router_enum.dart';
 
@@ -23,22 +23,32 @@ class TasksScreen extends ConsumerWidget {
               icon: const Icon(Icons.logout))
         ],
       ),
-      body: ref.watch(tasksStreamProvider).when(data: (data) {
+      body: ref.watch(tasksStreamProvider).when(data: (List<Task> taskList) {
         return ListView.separated(
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(data[index].title),
-              trailing: Text(
-                  data[index].createdAt.toDate().toString().substring(0, 16)),
+              onTap: () {
+                context.goNamed(
+                  AppRoute.editTask.name,
+                  queryParameters: {
+                    "taskId": taskList[index].taskId,
+                  },
+                );
+              },
+              title: Text(taskList[index].title),
+              trailing: Text(taskList[index]
+                  .createdAt
+                  .toDate()
+                  .toString()
+                  .substring(0, 16)),
             );
           },
           separatorBuilder: (context, index) => const Divider(height: 0.5),
-          itemCount: data.length,
+          itemCount: taskList.length,
         );
       }, loading: () {
         return const CircularProgressIndicator();
       }, error: (error, stackTrace) {
-        debugPrint(error.toString());
         return const Center(child: Text('エラーだよ'));
       }),
       floatingActionButton: FloatingActionButton(
