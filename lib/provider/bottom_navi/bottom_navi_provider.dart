@@ -13,8 +13,10 @@ class BottomNaviSelectedIndex extends _$BottomNaviSelectedIndex {
     final String currentPath = ref.read(goRouterProvider).location;
     if (currentPath == AppRoute.tasks.path) {
       return 0;
-    } else if (currentPath == AppRoute.mypage.path) {
+    } else if (currentPath == AppRoute.users.path) {
       return 1;
+    } else if (currentPath == AppRoute.mypage.path) {
+      return 2;
     } else {
       return 0;
     }

@@ -19,6 +19,10 @@ class BottomNavigationPage extends ConsumerWidget {
             label: 'ホーム',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: '会員一覧',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'マイページ',
           ),
@@ -30,6 +34,9 @@ class BottomNavigationPage extends ConsumerWidget {
               context.goNamed(AppRoute.tasks.name);
               break;
             case 1:
+              context.goNamed(AppRoute.users.name);
+              break;
+            case 2:
               context.goNamed(AppRoute.mypage.name);
               break;
           }

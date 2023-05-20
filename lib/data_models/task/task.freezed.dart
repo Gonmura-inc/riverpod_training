@@ -22,6 +22,7 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
 mixin _$Task {
   String get taskId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
   @TimestampConverter()
   Timestamp get createdAt => throw _privateConstructorUsedError;
 
@@ -36,7 +37,10 @@ abstract class $TaskCopyWith<$Res> {
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
   $Res call(
-      {String taskId, String title, @TimestampConverter() Timestamp createdAt});
+      {String taskId,
+      String title,
+      String userId,
+      @TimestampConverter() Timestamp createdAt});
 }
 
 /// @nodoc
@@ -54,6 +58,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   $Res call({
     Object? taskId = null,
     Object? title = null,
+    Object? userId = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +69,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -80,7 +89,10 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String taskId, String title, @TimestampConverter() Timestamp createdAt});
+      {String taskId,
+      String title,
+      String userId,
+      @TimestampConverter() Timestamp createdAt});
 }
 
 /// @nodoc
@@ -94,6 +106,7 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
   $Res call({
     Object? taskId = null,
     Object? title = null,
+    Object? userId = null,
     Object? createdAt = null,
   }) {
     return _then(_$_Task(
@@ -104,6 +117,10 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -119,6 +136,7 @@ class _$_Task implements _Task {
   _$_Task(
       {required this.taskId,
       required this.title,
+      required this.userId,
       @TimestampConverter() required this.createdAt});
 
   factory _$_Task.fromJson(Map<String, dynamic> json) => _$$_TaskFromJson(json);
@@ -128,12 +146,14 @@ class _$_Task implements _Task {
   @override
   final String title;
   @override
+  final String userId;
+  @override
   @TimestampConverter()
   final Timestamp createdAt;
 
   @override
   String toString() {
-    return 'Task(taskId: $taskId, title: $title, createdAt: $createdAt)';
+    return 'Task(taskId: $taskId, title: $title, userId: $userId, createdAt: $createdAt)';
   }
 
   @override
@@ -143,13 +163,15 @@ class _$_Task implements _Task {
             other is _$_Task &&
             (identical(other.taskId, taskId) || other.taskId == taskId) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, taskId, title, createdAt);
+  int get hashCode =>
+      Object.hash(runtimeType, taskId, title, userId, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -169,6 +191,7 @@ abstract class _Task implements Task {
   factory _Task(
       {required final String taskId,
       required final String title,
+      required final String userId,
       @TimestampConverter() required final Timestamp createdAt}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
@@ -177,6 +200,8 @@ abstract class _Task implements Task {
   String get taskId;
   @override
   String get title;
+  @override
+  String get userId;
   @override
   @TimestampConverter()
   Timestamp get createdAt;

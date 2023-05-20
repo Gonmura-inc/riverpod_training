@@ -73,6 +73,11 @@ class UserRepo extends _$UserRepo {
 }
 
 @riverpod
+Stream<List<Account>> watchUsers(WatchUsersRef ref) {
+  return ref.watch(userRepoProvider.notifier).watchUsers();
+}
+
+@riverpod
 Stream<Account?> watchAccount(WatchAccountRef ref, String userId) {
   return ref.watch(userRepoProvider.notifier).watchAccount(userId);
 }

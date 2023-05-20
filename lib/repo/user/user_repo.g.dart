@@ -6,6 +6,20 @@ part of 'user_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$watchUsersHash() => r'9fdc17f68dcd0aec8aab5b4023f800209b55b3c5';
+
+/// See also [watchUsers].
+@ProviderFor(watchUsers)
+final watchUsersProvider = AutoDisposeStreamProvider<List<Account>>.internal(
+  watchUsers,
+  name: r'watchUsersProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$watchUsersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef WatchUsersRef = AutoDisposeStreamProviderRef<List<Account>>;
 String _$watchAccountHash() => r'1657e49d2ffb109a5216e41719d966cacf457651';
 
 /// Copied from Dart SDK

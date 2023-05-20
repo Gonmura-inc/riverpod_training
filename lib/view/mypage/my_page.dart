@@ -16,6 +16,14 @@ class MyPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('マイページ'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                //ログアウト
+                ref.read(authRepoProvider.notifier).signOut();
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: SizedBox(
         width: double.infinity,

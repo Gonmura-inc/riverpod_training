@@ -10,6 +10,7 @@ class Task with _$Task {
   factory Task({
     required String taskId,
     required String title,
+    required String userId,
     @TimestampConverter() required Timestamp createdAt,
   }) = _Task;
 

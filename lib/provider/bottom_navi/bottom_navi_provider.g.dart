@@ -7,7 +7,7 @@ part of 'bottom_navi_provider.dart';
 // **************************************************************************
 
 String _$bottomNaviSelectedIndexHash() =>
-    r'bde40bc79ccfc839ded0149ad5ee7d75f18ac23a';
+    r'd954d573d83558fd59752e49a037d1c37d5552b5';
 
 /// See also [BottomNaviSelectedIndex].
 @ProviderFor(BottomNaviSelectedIndex)

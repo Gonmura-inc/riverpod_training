@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
+import 'package:riverpod_training/repo/auth/auth_repo.dart';
 import 'package:riverpod_training/repo/task/task_repo.dart';
 
 import 'package:uuid/uuid.dart';
@@ -96,6 +97,7 @@ class AddOrEditTaskPage extends HookConsumerWidget {
         taskId: const Uuid().v4(),
         title: title,
         createdAt: Timestamp.now(),
+        userId: ref.read(authRepoProvider)!.uid,
       );
       await ref.read(taskRepoProvider.notifier).addTask(newTask);
 

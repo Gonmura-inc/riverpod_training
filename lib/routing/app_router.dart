@@ -12,6 +12,7 @@ import 'package:riverpod_training/view/mypage/my_page.dart';
 import 'package:riverpod_training/view/task/tasks_page.dart';
 // ignore: depend_on_referenced_packages
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:riverpod_training/view/users/users_page.dart';
 
 part 'app_router.g.dart';
 
@@ -83,6 +84,13 @@ GoRouter goRouter(GoRouterRef ref) {
                   },
                 ),
               ],
+            ),
+            GoRoute(
+              path: AppRoute.users.path,
+              name: AppRoute.users.name,
+              pageBuilder: (context, state) {
+                return const NoTransitionPage(child: UsersPage());
+              },
             ),
             GoRoute(
                 path: AppRoute.mypage.path,

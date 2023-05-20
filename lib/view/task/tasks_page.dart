@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_training/data_models/account/account.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
 import 'package:riverpod_training/repo/auth/auth_repo.dart';
 import 'package:riverpod_training/repo/task/task_repo.dart';
+import 'package:riverpod_training/repo/user/user_repo.dart';
 
 import '../../config/utils/enum/router_enum.dart';
 
@@ -14,14 +16,6 @@ class TasksScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("タスク一覧画面"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                //ログアウト
-                ref.read(authRepoProvider.notifier).signOut();
-              },
-              icon: const Icon(Icons.logout))
-        ],
       ),
       body: ref.watch(tasksStreamProvider).when(data: (List<Task> taskList) {
         return ListView.separated(
@@ -36,6 +30,21 @@ class TasksScreen extends ConsumerWidget {
                 );
               },
               title: Text(taskList[index].title),
+              subtitle:
+                  ref.watch(WatchAccountProvider(taskList[index].userId)).when(
+                data: (Account? postAccount) {
+                  if (postAccount == null) {
+                    return const Text("エラー");
+                  }
+                  return Text(postAccount.userName);
+                },
+                error: (error, stackTrace) {
+                  return const Text("エラー");
+                },
+                loading: () {
+                  return const Text("読み込み中");
+                },
+              ),
               trailing: Text(taskList[index]
                   .createdAt
                   .toDate()
