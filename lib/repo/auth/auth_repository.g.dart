@@ -21,7 +21,21 @@ final authStateChangesProvider = AutoDisposeStreamProvider<User?>.internal(
 );
 
 typedef AuthStateChangesRef = AutoDisposeStreamProviderRef<User?>;
-String _$authRepoHash() => r'809f4da1a8f1444c14734af4584e99e8b359e688';
+String _$currentUserHash() => r'549404cf9b1fe366a3bf2b347ec421f364e80cd1';
+
+/// See also [currentUser].
+@ProviderFor(currentUser)
+final currentUserProvider = AutoDisposeProvider<User?>.internal(
+  currentUser,
+  name: r'currentUserProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentUserHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef CurrentUserRef = AutoDisposeProviderRef<User?>;
+String _$authRepoHash() => r'78ceb287f851d719e0a5b6f9254568655a39a3b6';
 
 /// See also [AuthRepo].
 @ProviderFor(AuthRepo)

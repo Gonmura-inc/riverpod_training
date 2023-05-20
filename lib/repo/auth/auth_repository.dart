@@ -44,11 +44,21 @@ class AuthRepo extends _$AuthRepo {
     await state.signOut();
   }
 
-  Stream<User?> authStateChanges() => state.authStateChanges();
-  User? get currentUser => state.currentUser;
+  Stream<User?> authStateChanges() {
+    return state.authStateChanges();
+  }
+
+  User? currentUser() {
+    return state.currentUser;
+  }
 }
 
 @riverpod
 Stream<User?> authStateChanges(AuthStateChangesRef ref) {
-  return ref.watch(authRepoProvider).authStateChanges();
+  return ref.watch(authRepoProvider.notifier).authStateChanges();
+}
+
+@riverpod
+User? currentUser(CurrentUserRef ref) {
+  return ref.read(authRepoProvider.notifier).currentUser();
 }
