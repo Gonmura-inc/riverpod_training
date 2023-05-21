@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
-import 'package:riverpod_training/data_models/account/account.dart';
+import 'package:riverpod_training/data_models/userdata/userdata.dart';
+
 import 'package:riverpod_training/repo/user/user_repo.dart';
 
 class EditMyUserPage extends HookConsumerWidget {
@@ -23,7 +24,7 @@ class EditMyUserPage extends HookConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: ref.watch(watchMyAccountProvider).when(
-              data: (Account? myAccount) {
+              data: (UserData? myAccount) {
                 if (myAccount == null) {
                   return const Text(
                     'エラーが発生しました。再度お試しください。',
@@ -80,14 +81,14 @@ class EditMyUserPage extends HookConsumerWidget {
 
   Future<void> _updateMyAccount(
       GlobalKey<FormState> formKey,
-      Account myAccount,
+      UserData myAccount,
       TextEditingController myNameController,
       WidgetRef ref,
       BuildContext context) async {
     if (!formKey.currentState!.validate()) {
       return;
     }
-    final Account updateAccount =
+    final UserData updateAccount =
         myAccount.copyWith(userName: myNameController.text);
 
     await ref.read(userRepoProvider.notifier).updateUser(updateAccount);

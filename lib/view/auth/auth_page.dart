@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
-import 'package:riverpod_training/data_models/account/account.dart';
+import 'package:riverpod_training/data_models/userdata/userdata.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
 import 'package:riverpod_training/repo/auth/auth_repo.dart';
 import 'package:riverpod_training/repo/user/user_repo.dart';
@@ -102,7 +102,7 @@ class AuthPage extends HookConsumerWidget {
               password: passController.text,
             );
     if (createUserResult == 'success') {
-      Account addAccount = Account(
+      UserData addAccount = UserData(
         userId: ref.read(authRepoProvider)!.uid,
         userName: '',
         createdAt: Timestamp.now(),

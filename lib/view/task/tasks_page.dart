@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod_training/data_models/account/account.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
+import 'package:riverpod_training/data_models/userdata/userdata.dart';
 import 'package:riverpod_training/repo/task/task_repo.dart';
 import 'package:riverpod_training/repo/user/user_repo.dart';
 
@@ -31,7 +31,7 @@ class TasksScreen extends ConsumerWidget {
               title: Text(taskList[index].title),
               subtitle:
                   ref.watch(WatchAccountProvider(taskList[index].userId)).when(
-                data: (Account? postAccount) {
+                data: (UserData? postAccount) {
                   if (postAccount == null) {
                     return const Text("エラー");
                   }
