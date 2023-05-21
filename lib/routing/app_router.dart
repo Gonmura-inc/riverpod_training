@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/repo/auth/auth_repo.dart';
 import 'package:riverpod_training/routing/go_router_refresh_streaml.dart';
+import 'package:riverpod_training/view/mypage/edit_my_image_page.dart';
 import 'package:riverpod_training/view/mypage/edit_my_user_page.dart';
 import 'package:riverpod_training/view/task/add_or_edit_task_page.dart';
 import 'package:riverpod_training/view/auth/auth_page.dart';
@@ -102,8 +103,17 @@ GoRouter goRouter(GoRouterRef ref) {
                   GoRoute(
                     path: AppRoute.editMyPage.path,
                     name: AppRoute.editMyPage.name,
+                    parentNavigatorKey: _rootNavigatorKey,
                     pageBuilder: (context, state) {
                       return const NoTransitionPage(child: EditMyUserPage());
+                    },
+                  ),
+                  GoRoute(
+                    path: AppRoute.editMyImagePage.path,
+                    name: AppRoute.editMyImagePage.name,
+                    parentNavigatorKey: _rootNavigatorKey,
+                    pageBuilder: (context, state) {
+                      return const NoTransitionPage(child: EditMyImagePage());
                     },
                   ),
                 ]),

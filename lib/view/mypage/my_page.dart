@@ -25,41 +25,68 @@ class MyPage extends ConsumerWidget {
               icon: const Icon(Icons.logout))
         ],
       ),
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: [
-            HeightMargin.normal,
-            ref.watch(watchMyAccountProvider).when(
-              data: (UserData? data) {
-                if (data == null) {
-                  return const SizedBox.shrink();
-                }
-                return Text(
-                  data.userName,
-                  style: const TextStyle(fontSize: FontSize.large),
-                );
-              },
-              error: (error, stackTrace) {
-                return const Text(
-                  'エラーが発生しました。再度お試しください。',
-                  style: TextStyle(fontSize: FontSize.large),
-                );
-              },
-              loading: () {
-                return const CircularProgressIndicator();
-              },
-            ),
-            HeightMargin.large,
-            ElevatedButton(
-              onPressed: () {
-                context.goNamed(AppRoute.editMyPage.name, queryParameters: {
-                  'userId': ref.read(authRepoProvider)!.uid,
-                });
-              },
-              child: const Text('プロフィール編集ページへ'),
-            )
-          ],
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: [
+              HeightMargin.normal,
+              ref.watch(watchMyAccountProvider).when(
+                data: (UserData? userData) {
+                  if (userData == null) {
+                    return const SizedBox.shrink();
+                  }
+                  return Column(
+                    children: [
+                      (userData.imageUrl == null || userData.imageUrl == '')
+                          ? const Icon(
+                              Icons.person,
+                              size: 100,
+                            )
+                          : ClipOval(
+                              child: SizedBox(
+                                width: 200,
+                                height: 200,
+                                child: Image.network(
+                                  userData.imageUrl!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                      Text(
+                        userData.userName,
+                        style: const TextStyle(fontSize: FontSize.large),
+                      ),
+                    ],
+                  );
+                },
+                error: (error, stackTrace) {
+                  return const Text(
+                    'エラーが発生しました。再度お試しください。',
+                    style: TextStyle(fontSize: FontSize.large),
+                  );
+                },
+                loading: () {
+                  return const CircularProgressIndicator();
+                },
+              ),
+              HeightMargin.large,
+              ElevatedButton(
+                onPressed: () {
+                  context.goNamed(AppRoute.editMyPage.name);
+                },
+                child: const Text('プロフィール編集ページへ'),
+              ),
+              HeightMargin.normal,
+              ElevatedButton(
+                onPressed: () {
+                  context.goNamed(AppRoute.editMyImagePage.name);
+                },
+                child: const Text('アイコン編集ページへ'),
+              ),
+              HeightMargin.large,
+            ],
+          ),
         ),
       ),
     );

@@ -40,4 +40,21 @@ final firebaseAuthInstanceProvider = AutoDisposeProvider<FirebaseAuth>.internal(
 );
 
 typedef FirebaseAuthInstanceRef = AutoDisposeProviderRef<FirebaseAuth>;
+String _$firebaseStorageInstanceHash() =>
+    r'9bcfba61dd1a89a8ad13846d4bd7ff4fd372c37d';
+
+/// See also [firebaseStorageInstance].
+@ProviderFor(firebaseStorageInstance)
+final firebaseStorageInstanceProvider =
+    AutoDisposeProvider<FirebaseStorage>.internal(
+  firebaseStorageInstance,
+  name: r'firebaseStorageInstanceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$firebaseStorageInstanceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef FirebaseStorageInstanceRef = AutoDisposeProviderRef<FirebaseStorage>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
