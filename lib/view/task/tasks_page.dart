@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/data_models/account/account.dart';
 import 'package:riverpod_training/data_models/task/task.dart';
-import 'package:riverpod_training/repo/auth/auth_repo.dart';
 import 'package:riverpod_training/repo/task/task_repo.dart';
 import 'package:riverpod_training/repo/user/user_repo.dart';
 
