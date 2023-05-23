@@ -7,10 +7,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
 import 'package:riverpod_training/config/utils/margin/height_margin.dart';
+import 'package:riverpod_training/data_models/like/like.dart';
+import 'package:riverpod_training/data_models/task/task.dart';
 import 'package:riverpod_training/data_models/userdata/userdata.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
 import 'package:riverpod_training/repo/auth/auth_repo.dart';
+import 'package:riverpod_training/repo/like/like_repo.dart';
+import 'package:riverpod_training/repo/task/task_repo.dart';
 import 'package:riverpod_training/repo/user/user_repo.dart';
+import 'package:riverpod_training/view/common_widgets/task_list_tile.dart';
 
 class MyPage extends HookConsumerWidget {
   const MyPage({super.key});
@@ -76,21 +81,21 @@ class MyPage extends HookConsumerWidget {
                   return const CircularProgressIndicator();
                 },
               ),
-              HeightMargin.large,
+              HeightMargin.small,
               ElevatedButton(
                 onPressed: () {
                   context.goNamed(AppRoute.editMyPage.name);
                 },
                 child: const Text('プロフィール編集ページへ'),
               ),
-              HeightMargin.normal,
+              HeightMargin.small,
               ElevatedButton(
                 onPressed: () {
                   context.goNamed(AppRoute.editMyImagePage.name);
                 },
                 child: const Text('アイコン編集ページへ'),
               ),
-              HeightMargin.large,
+              HeightMargin.small,
               ElevatedButton(
                 onPressed: () {
                   //メールアドレスを変更するダイアログを表示する
@@ -165,6 +170,7 @@ class MyPage extends HookConsumerWidget {
                 },
                 child: const Text('メルアド変更'),
               ),
+              HeightMargin.small,
               ElevatedButton(
                 onPressed: () async {
                   //パスワードリマインダーメールを送信する
@@ -182,6 +188,41 @@ class MyPage extends HookConsumerWidget {
                   }
                 },
                 child: const Text('パスワード変更'),
+              ),
+              //自分がいいねしたタスク一覧をリスト表示
+              HeightMargin.large,
+              ref.watch(watchMyLikesProvider).when(
+                data: (List<Like> likeList) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ref
+                          .watch(watchTaskProvider(likeList[index].taskId))
+                          .when(
+                        data: (Task taskData) {
+                          return TaskListTile(taskData: taskData);
+                        },
+                        loading: () {
+                          return const SizedBox.shrink();
+                        },
+                        error: (error, stackTrace) {
+                          return const SizedBox.shrink();
+                        },
+                      );
+                    },
+                    itemCount: likeList.length,
+                  );
+                },
+                error: (error, stackTrace) {
+                  return const Text(
+                    'エラーが発生しました。再度お試しください。',
+                    style: TextStyle(fontSize: FontSize.large),
+                  );
+                },
+                loading: () {
+                  return const CircularProgressIndicator();
+                },
               ),
             ],
           ),

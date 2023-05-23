@@ -79,3 +79,10 @@ class TaskRepo extends _$TaskRepo {
 Stream<List<Task>> tasksStream(TasksStreamRef ref) {
   return ref.read(taskRepoProvider.notifier).watchTasks();
 }
+
+@riverpod
+Stream<Task> watchTask(WatchTaskRef ref, String taskId) {
+  return ref.read(taskRepoProvider).doc(taskId).snapshots().map(
+        (DocumentSnapshot<Task> snapshot) => snapshot.data()!,
+      );
+}
