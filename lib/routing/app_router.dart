@@ -2,18 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
-import 'package:riverpod_training/repo/auth/auth_repo.dart';
+import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
 import 'package:riverpod_training/routing/go_router_refresh_streaml.dart';
-import 'package:riverpod_training/view/mypage/edit_my_image_page.dart';
-import 'package:riverpod_training/view/mypage/edit_my_user_page.dart';
-import 'package:riverpod_training/view/task/add_or_edit_task_page.dart';
-import 'package:riverpod_training/view/auth/auth_page.dart';
-import 'package:riverpod_training/view/bottom_navigation_page.dart';
-import 'package:riverpod_training/view/mypage/my_page.dart';
-import 'package:riverpod_training/view/task/tasks_page.dart';
+import 'package:riverpod_training/features/user/view/edit_my_image_page.dart';
+import 'package:riverpod_training/features/user/view/edit_my_user_page.dart';
+import 'package:riverpod_training/features/task/view/add_or_edit_task_page.dart';
+import 'package:riverpod_training/features/auth/view/auth_page.dart';
+import 'package:riverpod_training/features/navigation/view/bottom_navigation_page.dart';
+import 'package:riverpod_training/features/user/view/my_page.dart';
+import 'package:riverpod_training/features/task/view/tasks_page.dart';
 // ignore: depend_on_referenced_packages
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:riverpod_training/view/users/users_page.dart';
+import 'package:riverpod_training/features/user/view/users_page.dart';
 
 part 'app_router.g.dart';
 
