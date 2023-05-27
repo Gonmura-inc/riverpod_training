@@ -7,11 +7,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
 import 'package:riverpod_training/config/utils/margin/height_margin.dart';
+import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
+import 'package:riverpod_training/features/user/controller/storage_controller.dart';
+import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
-import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
-import 'package:riverpod_training/features/user/repo/storage_repo.dart';
-import 'package:riverpod_training/features/user/repo/user_repo.dart';
 
 class EditMyImagePage extends HookConsumerWidget {
   const EditMyImagePage({super.key});
@@ -33,7 +33,7 @@ class EditMyImagePage extends HookConsumerWidget {
             ///nullもしくは空白文字列じゃなかったら
             ///アイコン表示
             ///空白だったら、デフォルトアイコン表示
-            ref.watch(watchMyAccountProvider).when(
+            ref.watch(watchMyAccountControllerProvider).when(
               data: (UserData? userData) {
                 if (userData == null) {
                   return const Text(
@@ -113,8 +113,7 @@ class EditMyImagePage extends HookConsumerWidget {
     BuildContext context,
   ) async {
     final downloadUrl =
-        await ref.read(storageRepoProvider.notifier).uploadImageAndGetUrl(
-              ref.read(authRepoProvider)!.uid,
+        await ref.read(storageControllerProvider.notifier).uploadImageAndGetUrl(
               uint8list.value!,
             );
     //アイコンを変更したら、ユーザーのdocumentのimageUrlフィールドを更新
@@ -134,28 +133,26 @@ class EditMyImagePage extends HookConsumerWidget {
   ) async {
     await _updateImageUrl(ref, context, '');
     //storageの削除
-    final String myUserId = ref.read(authRepoProvider)!.uid;
-    await ref.read(storageRepoProvider.notifier).deleteImage(myUserId);
+    await ref.read(storageControllerProvider.notifier).deleteImage();
     if (context.mounted) {
       showSnackBar(context, '削除完了');
     }
-
     return;
   }
 
   Future<void> _updateImageUrl(
       WidgetRef ref, BuildContext context, String downloadUrl) async {
-    final String myUserId = ref.read(authRepoProvider)!.uid;
     final UserData? myUserData =
-        await ref.read(userRepoProvider.notifier).getAccount(myUserId);
+        await ref.read(userControllerProvider.notifier).getAccount();
     if (myUserData == null) {
       if (context.mounted) {
         showSnackBar(context, 'エラーが発生しました');
       }
       return;
     }
-    final UserData updateUserData = myUserData.copyWith(imageUrl: downloadUrl);
-    await ref.read(userRepoProvider.notifier).updateUser(updateUserData);
+    await ref
+        .read(userControllerProvider.notifier)
+        .updateUserImageUrl(myUserData, downloadUrl);
     return;
   }
 }

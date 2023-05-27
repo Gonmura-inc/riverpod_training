@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';
-import 'package:riverpod_training/features/user/repo/user_repo.dart';
 
 class UsersPage extends ConsumerWidget {
   const UsersPage({super.key});
@@ -10,7 +10,7 @@ class UsersPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('会員一覧')),
-      body: ref.watch(watchUsersProvider).when(
+      body: ref.watch(watchUsersControllerProvider).when(
         loading: () {
           return const Center(child: CircularProgressIndicator());
         },

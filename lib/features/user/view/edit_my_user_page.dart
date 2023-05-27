@@ -4,9 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
+import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';
-
-import 'package:riverpod_training/features/user/repo/user_repo.dart';
 
 class EditMyUserPage extends HookConsumerWidget {
   const EditMyUserPage({super.key});
@@ -23,7 +22,7 @@ class EditMyUserPage extends HookConsumerWidget {
           key: formKey,
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: ref.watch(watchMyAccountProvider).when(
+            child: ref.watch(watchMyAccountControllerProvider).when(
               data: (UserData? myAccount) {
                 if (myAccount == null) {
                   return const Text(
@@ -88,10 +87,10 @@ class EditMyUserPage extends HookConsumerWidget {
     if (!formKey.currentState!.validate()) {
       return;
     }
-    final UserData updateAccount =
-        myAccount.copyWith(userName: myNameController.text);
 
-    await ref.read(userRepoProvider.notifier).updateUser(updateAccount);
+    await ref
+        .read(userControllerProvider.notifier)
+        .updateUserName(myNameController.text, myAccount);
     if (context.mounted) {
       context.goNamed(AppRoute.mypage.name);
     }

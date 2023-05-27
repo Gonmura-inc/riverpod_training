@@ -5,8 +5,6 @@ import 'package:riverpod_training/config/firebase/firebase_instance_provider.dar
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';
 
-import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
-
 part 'user_repo.g.dart';
 
 @riverpod
@@ -71,22 +69,4 @@ class UserRepo extends _$UserRepo {
       },
     );
   }
-}
-
-@riverpod
-Stream<List<UserData>> watchUsers(WatchUsersRef ref) {
-  return ref.watch(userRepoProvider.notifier).watchUsers();
-}
-
-@riverpod
-Stream<UserData?> watchAccount(WatchAccountRef ref, String userId) {
-  return ref.watch(userRepoProvider.notifier).watchAccount(userId);
-}
-
-//自分のユーザードキュメントを監視するプロバイダー
-@riverpod
-Stream<UserData?> watchMyAccount(WatchMyAccountRef ref) {
-  return ref
-      .watch(userRepoProvider.notifier)
-      .watchAccount(ref.watch(authRepoProvider)!.uid);
 }

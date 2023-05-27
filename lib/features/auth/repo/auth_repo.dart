@@ -9,7 +9,7 @@ part 'auth_repo.g.dart';
 class AuthRepo extends _$AuthRepo {
   @override
   User? build() {
-    return ref.read(firebaseAuthInstanceProvider).currentUser;
+    return ref.watch(firebaseAuthInstanceProvider).currentUser;
   }
 
   //ログイン処理
@@ -55,7 +55,7 @@ class AuthRepo extends _$AuthRepo {
   }
 
   //パスワードリマインダーメールの送信
-  Future<String> sendPasswordResetEmail() async {
+  Future<String> resetPassword() async {
     try {
       await ref
           .read(firebaseAuthInstanceProvider)
@@ -64,7 +64,6 @@ class AuthRepo extends _$AuthRepo {
     } on FirebaseAuthException catch (e) {
       return FirebaseAuthErrorExt.fromCode(e.code).message;
     } catch (e) {
-      print(e);
       return e.toString();
     }
   }

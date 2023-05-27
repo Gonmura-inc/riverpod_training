@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -7,15 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
 import 'package:riverpod_training/config/utils/margin/height_margin.dart';
+import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
+import 'package:riverpod_training/features/like/controller/like_controller.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/task/controller/task_controller.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
+import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
-import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
-import 'package:riverpod_training/features/like/repo/like_repo.dart';
-import 'package:riverpod_training/features/task/repo/task_repo.dart';
-import 'package:riverpod_training/features/user/repo/user_repo.dart';
 import 'package:riverpod_training/common_widgets/task_list_tile.dart';
 
 class MyPage extends HookConsumerWidget {
@@ -32,7 +29,7 @@ class MyPage extends HookConsumerWidget {
           IconButton(
               onPressed: () {
                 //ログアウト
-                ref.read(authRepoProvider.notifier).signOut();
+                ref.read(authControllerProvider.notifier).signOut();
               },
               icon: const Icon(Icons.logout))
         ],
@@ -43,7 +40,7 @@ class MyPage extends HookConsumerWidget {
           child: Column(
             children: [
               HeightMargin.normal,
-              ref.watch(watchMyAccountProvider).when(
+              ref.watch(watchMyAccountControllerProvider).when(
                 data: (UserData? userData) {
                   if (userData == null) {
                     return const SizedBox.shrink();
@@ -132,9 +129,11 @@ class MyPage extends HookConsumerWidget {
                             onPressed: () async {
                               //ログイン
                               final result = await ref
-                                  .read(authRepoProvider.notifier)
+                                  .read(authControllerProvider.notifier)
                                   .signIn(
-                                      email: ref.read(authRepoProvider)!.email!,
+                                      email: ref
+                                          .read(authControllerProvider)!
+                                          .email!,
                                       password: passController.text);
                               if (result != 'success') {
                                 if (context.mounted) {
@@ -143,7 +142,7 @@ class MyPage extends HookConsumerWidget {
                               }
                               //メールアドレスを変更する
                               final String updateEmailResult = await ref
-                                  .read(authRepoProvider.notifier)
+                                  .read(authControllerProvider.notifier)
                                   .updateEmail(
                                     email: newEmailController.text,
                                   );
@@ -176,8 +175,8 @@ class MyPage extends HookConsumerWidget {
                 onPressed: () async {
                   //パスワードリマインダーメールを送信する
                   final result = await ref
-                      .read(authRepoProvider.notifier)
-                      .sendPasswordResetEmail();
+                      .read(authControllerProvider.notifier)
+                      .resetPassword();
                   if (result == 'success') {
                     if (context.mounted) {
                       showSnackBar(context, 'パスワード再設定メールを送信しました');
@@ -192,7 +191,7 @@ class MyPage extends HookConsumerWidget {
               ),
               //自分がいいねしたタスク一覧をリスト表示
               HeightMargin.large,
-              ref.watch(watchMyLikesProvider).when(
+              ref.watch(watchMyLikesControllerProvider).when(
                 data: (List<Like> likeList) {
                   return ListView.builder(
                     shrinkWrap: true,

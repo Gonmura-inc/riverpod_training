@@ -43,28 +43,3 @@ class LikeRepo extends _$LikeRepo {
 
   //自分がいいねしたlikeDocumentのstream取得
 }
-
-@riverpod
-Stream<List<Like>> watchLikes(WatchLikesRef ref, String taskId) {
-  return ref.read(likeRepoProvider(taskId).notifier).watchLikes();
-}
-
-@riverpod
-Stream<List<Like>> watchMyLikes(WatchMyLikesRef ref) {
-  return ref
-      .read(firebaseFireStoreInstanceProvider)
-      .collectionGroup(FirebaseLikesKey.likeCollection)
-      .withConverter<Like>(
-        fromFirestore: (snapshot, _) => Like.fromJson(snapshot.data()!),
-        toFirestore: (Like value, _) => value.toJson(),
-      )
-      .where(FirebaseLikesKey.userId,
-          isEqualTo: ref.read(authRepoProvider)!.uid)
-      .snapshots()
-      .map(
-    (QuerySnapshot<Like> snapshot) {
-      print(snapshot);
-      return snapshot.docs.map((doc) => doc.data()).toList();
-    },
-  );
-}
