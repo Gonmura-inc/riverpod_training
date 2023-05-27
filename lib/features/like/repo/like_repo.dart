@@ -3,8 +3,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/config/firebase/firebase_instance_provider.dart';
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
-import 'package:riverpod_training/features/task/data_model/task.dart';
-import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
 
 part 'like_repo.g.dart';
 

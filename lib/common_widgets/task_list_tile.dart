@@ -1,16 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/margin/width_margin.dart';
+import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
+import 'package:riverpod_training/features/like/controller/like_controller.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
+import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';
-import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
-import 'package:riverpod_training/features/like/repo/like_repo.dart';
-import 'package:riverpod_training/features/user/repo/user_repo.dart';
-import 'package:uuid/uuid.dart';
 
 class TaskListTile extends ConsumerWidget {
   const TaskListTile({
@@ -34,7 +32,8 @@ class TaskListTile extends ConsumerWidget {
             );
           },
           title: Text(taskData.title),
-          subtitle: ref.watch(WatchAccountProvider(taskData.userId)).when(
+          subtitle:
+              ref.watch(watchAccountControllerProvider(taskData.userId)).when(
             data: (UserData? postAccount) {
               if (postAccount == null) {
                 return const Text("エラー");
@@ -51,12 +50,12 @@ class TaskListTile extends ConsumerWidget {
           trailing:
               Text(taskData.createdAt.toDate().toString().substring(0, 16)),
         ),
-        ref.watch(watchLikesProvider(taskData.taskId)).when(
+        ref.watch(watchLikesControllerProvider(taskData.taskId)).when(
           data: (List<Like> likeList) {
             bool isLiked = false;
             String myLikeId = '';
             for (final Like likeData in likeList) {
-              if (likeData.userId == ref.read(authRepoProvider)!.uid) {
+              if (likeData.userId == ref.read(authControllerProvider)!.uid) {
                 isLiked = true;
                 myLikeId = likeData.likeId;
                 break;
@@ -70,19 +69,12 @@ class TaskListTile extends ConsumerWidget {
                     if (isLiked) {
                       //いいねを取り消す
                       ref
-                          .read(likeRepoProvider(taskData.taskId).notifier)
-                          .deleteLike(myLikeId);
+                          .read(likeControllerProvider.notifier)
+                          .deleteLike(taskData.taskId, myLikeId);
                     } else {
-                      //いいねをする
-                      final Like addLikeData = Like(
-                        likeId: const Uuid().v4(),
-                        taskId: taskData.taskId,
-                        userId: ref.read(authRepoProvider)!.uid,
-                        createdAt: Timestamp.now(),
-                      );
                       ref
-                          .read(likeRepoProvider(taskData.taskId).notifier)
-                          .addLike(addLikeData);
+                          .read(likeControllerProvider.notifier)
+                          .addLike(taskData.taskId);
                     }
                   },
                   icon: Icon(

@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
 import 'package:riverpod_training/config/utils/margin/height_margin.dart';
-import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
 import 'package:riverpod_training/features/user/controller/storage_controller.dart';
 import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';

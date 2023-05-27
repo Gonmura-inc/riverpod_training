@@ -5,12 +5,30 @@ import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
 import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/like/repo/like_repo.dart';
+import 'package:uuid/uuid.dart';
 part 'like_controller.g.dart';
 
 @riverpod
 class LikeController extends _$LikeController {
   @override
   build() {}
+
+  Future<void> deleteLike(String taskId, String deleteLikeId) async {
+    await ref.read(likeRepoProvider(taskId).notifier).deleteLike(deleteLikeId);
+  }
+
+  Future<void> addLike(
+    String taskId,
+  ) async {
+    //いいねをする
+    final Like addLikeData = Like(
+      likeId: const Uuid().v4(),
+      taskId: taskId,
+      userId: ref.read(authRepoProvider)!.uid,
+      createdAt: Timestamp.now(),
+    );
+    await ref.read(likeRepoProvider(taskId).notifier).addLike(addLikeData);
+  }
 }
 
 @riverpod
