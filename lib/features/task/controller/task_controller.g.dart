@@ -1,0 +1,147 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'task_controller.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$tasksStreamControllerHash() =>
+    r'a0338d78a72127390b1d27bde074bb5e31c5f007';
+
+/// See also [tasksStreamController].
+@ProviderFor(tasksStreamController)
+final tasksStreamControllerProvider =
+    AutoDisposeStreamProvider<List<Task>>.internal(
+  tasksStreamController,
+  name: r'tasksStreamControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$tasksStreamControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef TasksStreamControllerRef = AutoDisposeStreamProviderRef<List<Task>>;
+String _$watchTaskControllerHash() =>
+    r'0b8703f9cf8463484bcf2c5641ca12adb5908ccc';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+typedef WatchTaskControllerRef = AutoDisposeStreamProviderRef<Task>;
+
+/// See also [watchTaskController].
+@ProviderFor(watchTaskController)
+const watchTaskControllerProvider = WatchTaskControllerFamily();
+
+/// See also [watchTaskController].
+class WatchTaskControllerFamily extends Family<AsyncValue<Task>> {
+  /// See also [watchTaskController].
+  const WatchTaskControllerFamily();
+
+  /// See also [watchTaskController].
+  WatchTaskControllerProvider call(
+    String taskId,
+  ) {
+    return WatchTaskControllerProvider(
+      taskId,
+    );
+  }
+
+  @override
+  WatchTaskControllerProvider getProviderOverride(
+    covariant WatchTaskControllerProvider provider,
+  ) {
+    return call(
+      provider.taskId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'watchTaskControllerProvider';
+}
+
+/// See also [watchTaskController].
+class WatchTaskControllerProvider extends AutoDisposeStreamProvider<Task> {
+  /// See also [watchTaskController].
+  WatchTaskControllerProvider(
+    this.taskId,
+  ) : super.internal(
+          (ref) => watchTaskController(
+            ref,
+            taskId,
+          ),
+          from: watchTaskControllerProvider,
+          name: r'watchTaskControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$watchTaskControllerHash,
+          dependencies: WatchTaskControllerFamily._dependencies,
+          allTransitiveDependencies:
+              WatchTaskControllerFamily._allTransitiveDependencies,
+        );
+
+  final String taskId;
+
+  @override
+  bool operator ==(Object other) {
+    return other is WatchTaskControllerProvider && other.taskId == taskId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, taskId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$taskControllerHash() => r'179318274bf66b17bbcef61fbd677810dc3a5b3f';
+
+/// See also [TaskController].
+@ProviderFor(TaskController)
+final taskControllerProvider =
+    AutoDisposeNotifierProvider<TaskController, dynamic>.internal(
+  TaskController.new,
+  name: r'taskControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$taskControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TaskController = AutoDisposeNotifier<dynamic>;
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

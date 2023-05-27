@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_training/features/task/controller/task_controller.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
-import 'package:riverpod_training/features/task/repo/task_repo.dart';
 import 'package:riverpod_training/common_widgets/task_list_tile.dart';
 
 import '../../../config/utils/enum/router_enum.dart';
@@ -15,7 +15,8 @@ class TasksScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text("タスク一覧画面"),
       ),
-      body: ref.watch(tasksStreamProvider).when(data: (List<Task> taskList) {
+      body: ref.watch(tasksStreamControllerProvider).when(
+          data: (List<Task> taskList) {
         return ListView.separated(
           itemBuilder: (context, index) {
             final Task taskData = taskList[index];

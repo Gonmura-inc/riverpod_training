@@ -1,14 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_training/features/task/controller/task_controller.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
-import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
-import 'package:riverpod_training/features/task/repo/task_repo.dart';
-
-import 'package:uuid/uuid.dart';
 
 import '../../../config/utils/enum/router_enum.dart';
 
@@ -22,7 +18,8 @@ class AddOrEditTaskPage extends HookConsumerWidget {
     late Task taskData;
     Future(() async {
       if (taskId != null) {
-        taskData = await ref.read(taskRepoProvider.notifier).getTask(taskId!);
+        taskData =
+            await ref.read(taskControllerProvider.notifier).getTask(taskId!);
         taskTitleController.text = taskData.title;
       }
     });
@@ -93,14 +90,7 @@ class AddOrEditTaskPage extends HookConsumerWidget {
     //taskデータクラスのインスタンスを作成
     //taskIdはuuidパッケージを使ってランダムなidを自動で生成
     try {
-      Task newTask = Task(
-        taskId: const Uuid().v4(),
-        title: title,
-        createdAt: Timestamp.now(),
-        userId: ref.read(authRepoProvider)!.uid,
-      );
-      await ref.read(taskRepoProvider.notifier).addTask(newTask);
-
+      await ref.read(taskControllerProvider.notifier).addTask(title);
       if (context.mounted) {
         context.goNamed(AppRoute.tasks.name);
       }
@@ -116,10 +106,9 @@ class AddOrEditTaskPage extends HookConsumerWidget {
     required Task taskData,
   }) async {
     try {
-      final Task editTaskData = taskData.copyWith(
-        title: title,
-      );
-      await ref.read(taskRepoProvider.notifier).updateTask(editTaskData);
+      await ref
+          .read(taskControllerProvider.notifier)
+          .updateTask(taskData, title);
       if (context.mounted) {
         context.goNamed(AppRoute.tasks.name);
       }

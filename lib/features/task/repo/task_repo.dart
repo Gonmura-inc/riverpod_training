@@ -71,18 +71,3 @@ class TaskRepo extends _$TaskRepo {
     await state.doc(addTaskData.taskId).set(addTaskData);
   }
 }
-
-///taskListをstreamで持っているBasicProviderを定義しないと、
-///view側から呼べないから作る必要あり
-///上記のtaskRepoプロバイダーのstateはあくまでuserFireStoreだからね。
-@riverpod
-Stream<List<Task>> tasksStream(TasksStreamRef ref) {
-  return ref.read(taskRepoProvider.notifier).watchTasks();
-}
-
-@riverpod
-Stream<Task> watchTask(WatchTaskRef ref, String taskId) {
-  return ref.read(taskRepoProvider).doc(taskId).snapshots().map(
-        (DocumentSnapshot<Task> snapshot) => snapshot.data()!,
-      );
-}
