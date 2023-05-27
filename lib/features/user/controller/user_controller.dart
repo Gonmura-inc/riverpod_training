@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';
@@ -24,6 +25,15 @@ class UserController extends _$UserController {
       UserData myUserData, String downloadUrl) async {
     final UserData updateUserData = myUserData.copyWith(imageUrl: downloadUrl);
     await ref.read(userRepoProvider.notifier).updateUser(updateUserData);
+  }
+
+  Future<void> createUser() async {
+    UserData addAccount = UserData(
+      userId: ref.read(authRepoProvider)!.uid,
+      userName: '',
+      createdAt: Timestamp.now(),
+    );
+    await ref.read(userRepoProvider.notifier).createUser(addAccount);
   }
 }
 

@@ -28,4 +28,11 @@ class AuthController extends _$AuthController {
   Future<String> resetPassword() async {
     return await ref.read(authRepoProvider.notifier).resetPassword();
   }
+
+  Future<String> createUser(
+      {required String email, required String password}) async {
+    return await ref
+        .read(authRepoProvider.notifier)
+        .createUser(email: email, password: password);
+  }
 }

@@ -1,13 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
-import 'package:riverpod_training/features/user/data_model/userdata.dart';
+import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
+import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
-import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
-import 'package:riverpod_training/features/user/repo/user_repo.dart';
 
 class AuthPage extends HookConsumerWidget {
   const AuthPage({super.key});
@@ -70,10 +68,11 @@ class AuthPage extends HookConsumerWidget {
       return;
     }
     //ログイン処理
-    final String loginResult = await ref.read(authRepoProvider.notifier).signIn(
-          email: emailController.text,
-          password: passController.text,
-        );
+    final String loginResult =
+        await ref.read(authControllerProvider.notifier).signIn(
+              email: emailController.text,
+              password: passController.text,
+            );
     if (loginResult == 'success') {
       if (context.mounted) {
         context.goNamed(AppRoute.tasks.name);
@@ -97,17 +96,12 @@ class AuthPage extends HookConsumerWidget {
     }
     //会員登録処理
     final String createUserResult =
-        await ref.read(authRepoProvider.notifier).createUser(
+        await ref.read(authControllerProvider.notifier).createUser(
               email: emailController.text,
               password: passController.text,
             );
     if (createUserResult == 'success') {
-      UserData addAccount = UserData(
-        userId: ref.read(authRepoProvider)!.uid,
-        userName: '',
-        createdAt: Timestamp.now(),
-      );
-      await ref.read(userRepoProvider.notifier).createUser(addAccount);
+      await ref.read(userControllerProvider.notifier).createUser();
       if (context.mounted) {
         context.goNamed(AppRoute.tasks.name);
       }

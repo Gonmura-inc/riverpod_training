@@ -146,7 +146,7 @@ final watchMyAccountControllerProvider =
 );
 
 typedef WatchMyAccountControllerRef = AutoDisposeStreamProviderRef<UserData?>;
-String _$userControllerHash() => r'578e4a01239e501d4d3912f3fde1e28933635992';
+String _$userControllerHash() => r'd4d09b28381bf39784b83a777ab6e583e318a7c7';
 
 /// See also [UserController].
 @ProviderFor(UserController)
