@@ -129,7 +129,7 @@ final watchMyLikesControllerProvider =
 );
 
 typedef WatchMyLikesControllerRef = AutoDisposeStreamProviderRef<List<Like>>;
-String _$likeControllerHash() => r'539842fc834bf1a01fab3f1fc6cb135924385ae8';
+String _$likeControllerHash() => r'5f7b548729c49b5251cccb07bbc09ba7451588e1';
 
 /// See also [LikeController].
 @ProviderFor(LikeController)

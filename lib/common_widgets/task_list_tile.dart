@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/margin/width_margin.dart';
-import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
 import 'package:riverpod_training/features/like/controller/like_controller.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
@@ -52,21 +51,15 @@ class TaskListTile extends ConsumerWidget {
         ),
         ref.watch(watchLikesControllerProvider(taskData.taskId)).when(
           data: (List<Like> likeList) {
-            bool isLiked = false;
-            String myLikeId = '';
-            for (final Like likeData in likeList) {
-              if (likeData.userId == ref.read(authControllerProvider)!.uid) {
-                isLiked = true;
-                myLikeId = likeData.likeId;
-                break;
-              }
-            }
+            String myLikeId =
+                ref.read(likeControllerProvider.notifier).getMyLikeId(likeList);
+
             return Row(
               children: [
                 WidthMargin.small,
                 IconButton(
                   onPressed: () {
-                    if (isLiked) {
+                    if (myLikeId.isNotEmpty) {
                       //いいねを取り消す
                       ref
                           .read(likeControllerProvider.notifier)
@@ -79,7 +72,7 @@ class TaskListTile extends ConsumerWidget {
                   },
                   icon: Icon(
                     Icons.favorite,
-                    color: isLiked ? Colors.red : Colors.grey,
+                    color: myLikeId.isNotEmpty ? Colors.red : Colors.grey,
                   ),
                 ),
                 const Text('いいね数'),

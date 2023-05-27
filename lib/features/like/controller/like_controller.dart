@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/config/firebase/firebase_instance_provider.dart';
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
+import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
 import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/like/repo/like_repo.dart';
@@ -28,6 +29,17 @@ class LikeController extends _$LikeController {
       createdAt: Timestamp.now(),
     );
     await ref.read(likeRepoProvider(taskId).notifier).addLike(addLikeData);
+  }
+
+  String getMyLikeId(List<Like> likeList) {
+    String myLikeId = '';
+    for (final Like likeData in likeList) {
+      if (likeData.userId == ref.read(authControllerProvider)!.uid) {
+        myLikeId = likeData.likeId;
+        break;
+      }
+    }
+    return myLikeId;
   }
 }
 
