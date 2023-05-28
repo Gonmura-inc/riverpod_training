@@ -67,6 +67,18 @@ class MyPage extends HookConsumerWidget {
                         userData.userName,
                         style: const TextStyle(fontSize: FontSize.large),
                       ),
+                      ref.watch(watchMyTasksControllerProvider).when(
+                        error: (error, stackTrace) {
+                          return const SizedBox.shrink();
+                        },
+                        loading: () {
+                          return const SizedBox.shrink();
+                        },
+                        data: (List<Task> myTaskList) {
+                          return Center(
+                              child: Text('タスク数：${myTaskList.length}'));
+                        },
+                      ),
                     ],
                   );
                 },

@@ -127,6 +127,23 @@ final tasksStreamControllerProvider =
 );
 
 typedef TasksStreamControllerRef = AutoDisposeStreamProviderRef<List<Task>>;
+String _$watchMyTasksControllerHash() =>
+    r'4aa9a1ea995d1a09d94ca94d65e9ff0e1cfdbc12';
+
+/// See also [watchMyTasksController].
+@ProviderFor(watchMyTasksController)
+final watchMyTasksControllerProvider =
+    AutoDisposeStreamProvider<List<Task>>.internal(
+  watchMyTasksController,
+  name: r'watchMyTasksControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$watchMyTasksControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef WatchMyTasksControllerRef = AutoDisposeStreamProviderRef<List<Task>>;
 String _$watchTaskControllerHash() =>
     r'0b8703f9cf8463484bcf2c5641ca12adb5908ccc';
 typedef WatchTaskControllerRef = AutoDisposeStreamProviderRef<Task>;

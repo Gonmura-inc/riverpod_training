@@ -10,6 +10,7 @@ class FirebaseTasksKey {
   static String taskId = 'taskId';
   static String createdAt = 'createdAt';
   static String title = 'title';
+  static String userId = 'userId';
 }
 
 class FirebaseLikesKey {

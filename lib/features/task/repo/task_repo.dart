@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/config/firebase/firebase_instance_provider.dart';
 
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
+import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
 
 part 'task_repo.g.dart';
@@ -69,5 +70,23 @@ class TaskRepo extends _$TaskRepo {
   //ドキュメント追加
   Future<void> addTask(Task addTaskData) async {
     await state.doc(addTaskData.taskId).set(addTaskData);
+  }
+
+  //自分のタスクを絞り込む
+  //Streamでドキュメント取得
+  Stream<List<Task>> watchMyTasks() {
+    return state
+        .where(FirebaseTasksKey.userId,
+            isEqualTo: ref.read(authRepoProvider)!.uid)
+        .snapshots()
+        .map(
+      (QuerySnapshot<Task> snapshot) {
+        return snapshot.docs.map(
+          (QueryDocumentSnapshot<Task> doc) {
+            return doc.data();
+          },
+        ).toList();
+      },
+    );
   }
 }

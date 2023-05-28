@@ -47,6 +47,11 @@ Stream<List<Task>> tasksStreamController(TasksStreamControllerRef ref) {
 }
 
 @riverpod
+Stream<List<Task>> watchMyTasksController(WatchMyTasksControllerRef ref) {
+  return ref.read(taskRepoProvider.notifier).watchMyTasks();
+}
+
+@riverpod
 Stream<Task> watchTaskController(WatchTaskControllerRef ref, String taskId) {
   return ref.read(taskRepoProvider).doc(taskId).snapshots().map(
         (DocumentSnapshot<Task> snapshot) => snapshot.data()!,
