@@ -47,18 +47,31 @@ class EditMyUserPage extends HookConsumerWidget {
                       height: 10,
                     ),
                     //タスク追加ボタン
-                    ElevatedButton(
-                      onPressed: () async {
-                        await _updateMyAccount(
-                          formKey,
-                          myAccount,
-                          myNameController,
-                          ref,
-                          context,
+                    ref.watch(userControllerProvider).when(
+                      data: (data) {
+                        return ElevatedButton(
+                          onPressed: () async {
+                            await _updateMyAccount(
+                              formKey,
+                              myAccount,
+                              myNameController,
+                              ref,
+                              context,
+                            );
+                          },
+                          child: const Text('ユーザーネーム変更'),
                         );
                       },
-                      child: const Text('ユーザーネーム変更'),
-                    )
+                      loading: () {
+                        return const CircularProgressIndicator();
+                      },
+                      error: (error, stackTrace) {
+                        return const Text(
+                          'エラーが発生しました。再度お試しください。',
+                          style: TextStyle(fontSize: FontSize.large),
+                        );
+                      },
+                    ),
                   ],
                 );
               },

@@ -26,7 +26,7 @@ class TasksScreen extends HookConsumerWidget {
           itemCount: taskList.length,
         );
       }, loading: () {
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       }, error: (error, stackTrace) {
         return const Center(child: Text('エラーだよ'));
       }),

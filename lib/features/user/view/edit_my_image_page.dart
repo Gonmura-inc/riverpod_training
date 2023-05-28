@@ -24,23 +24,20 @@ class EditMyImagePage extends HookConsumerWidget {
       ),
       body: SizedBox(
         width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ///ログインユーザーdocumentのimageUrlフィールドが
-            ///nullもしくは空白文字列じゃなかったら
-            ///アイコン表示
-            ///空白だったら、デフォルトアイコン表示
-            ref.watch(watchMyAccountControllerProvider).when(
-              data: (UserData? userData) {
-                if (userData == null) {
-                  return const Text(
-                    'エラーが発生しました。再度お試しください。',
-                    style: TextStyle(fontSize: FontSize.large),
-                  );
-                }
-                if (userData.imageUrl == null || userData.imageUrl == '') {
-                  return InkWell(
+        child: ref.watch(watchMyAccountControllerProvider).when(
+          data: (UserData? userData) {
+            if (userData == null) {
+              return const Text(
+                'エラーが発生しました。再度お試しください。',
+                style: TextStyle(fontSize: FontSize.large),
+              );
+            }
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (userData.imageUrl == null || userData.imageUrl == '')
+                  InkWell(
                     onTap: () async {
                       uint8list.value = await ImagePickerWeb.getImageAsBytes();
                     },
@@ -48,58 +45,78 @@ class EditMyImagePage extends HookConsumerWidget {
                       Icons.person,
                       size: 100,
                     ),
-                  );
-                }
-                return InkWell(
-                  onTap: () async {
-                    uint8list.value = await ImagePickerWeb.getImageAsBytes();
-                  },
-                  child: ClipOval(
-                    child: SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: Image.network(
-                        userData.imageUrl!,
-                        fit: BoxFit.cover,
+                  )
+                else
+                  InkWell(
+                    onTap: () async {
+                      uint8list.value = await ImagePickerWeb.getImageAsBytes();
+                    },
+                    child: ClipOval(
+                      child: SizedBox(
+                        width: 200,
+                        height: 200,
+                        child: Image.network(
+                          userData.imageUrl!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                );
-              },
-              error: (error, stackTrace) {
-                return const Text(
-                  'エラーが発生しました。再度お試しください。',
-                  style: TextStyle(fontSize: FontSize.large),
-                );
-              },
-              loading: () {
-                return const Center(child: CircularProgressIndicator());
-              },
-            ),
 
-            ///アイコンを削除するボタン
-            ElevatedButton(
-              onPressed: () async {
-                //アイコンを変更したら、ユーザーのdocumentのimageUrlフィールドを更新
-                await _deleteIcon(ref, context);
-              },
-              child: const Text('削除'),
-            ),
-            HeightMargin.large,
+                ///アイコンを削除するボタン
+                ref.watch(storageControllerProvider).when(
+                  loading: () {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                  error: (error, stackTrace) {
+                    return const Text(
+                      'エラーが発生しました。再度お試しください。',
+                      style: TextStyle(fontSize: FontSize.large),
+                    );
+                  },
+                  data: (data) {
+                    return Column(
+                      children: [
+                        if (userData.imageUrl != null &&
+                            userData.imageUrl != '')
+                          ElevatedButton(
+                            onPressed: () async {
+                              //アイコンを変更したら、ユーザーのdocumentのimageUrlフィールドを更新
+                              await _deleteIcon(ref, context);
+                            },
+                            child: const Text('削除'),
+                          ),
 
-            ///アイコンを変更するボタン
-            ElevatedButton(
-              onPressed: () async {
-                if (uint8list.value == null) {
-                  showSnackBar(context, '画像が選択されていません。');
-                  return;
-                }
-                //アイコンを変更する処理
-                await _updateIcon(ref, uint8list, context);
-              },
-              child: const Text('アイコンを変更する'),
-            ),
-          ],
+                        HeightMargin.large,
+
+                        ///アイコンを変更するボタン
+                        ElevatedButton(
+                          onPressed: () async {
+                            if (uint8list.value == null) {
+                              showSnackBar(context, '画像が選択されていません。');
+                              return;
+                            }
+                            //アイコンを変更する処理
+                            await _updateIcon(ref, uint8list, context);
+                          },
+                          child: const Text('アイコンを変更する'),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            );
+          },
+          error: (error, stackTrace) {
+            return const Text(
+              'エラーが発生しました。再度お試しください。',
+              style: TextStyle(fontSize: FontSize.large),
+            );
+          },
+          loading: () {
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );

@@ -10,9 +10,12 @@ part 'task_controller.g.dart';
 @riverpod
 class TaskController extends _$TaskController {
   @override
-  build() {}
+  AsyncValue build() {
+    return const AsyncData(null);
+  }
 
   Future<void> addTask(String title) async {
+    state = const AsyncLoading();
     Task newTask = Task(
       taskId: const Uuid().v4(),
       title: title,
@@ -20,20 +23,22 @@ class TaskController extends _$TaskController {
       userId: ref.read(authRepoProvider)!.uid,
     );
     await ref.read(taskRepoProvider.notifier).addTask(newTask);
+    state = const AsyncData(null);
   }
 
   Future<void> updateTask(Task taskData, String title) async {
+    state = const AsyncLoading();
     final Task editTaskData = taskData.copyWith(
       title: title,
     );
     await ref.read(taskRepoProvider.notifier).updateTask(editTaskData);
+    state = const AsyncData(null);
   }
+}
 
-  Future<Task> getTask(String taskId) async {
-    final Task taskData =
-        await ref.read(taskRepoProvider.notifier).getTask(taskId);
-    return taskData;
-  }
+@riverpod
+Future<Task> getTaskController(GetTaskControllerRef ref, String taskId) {
+  return ref.read(taskRepoProvider.notifier).getTask(taskId);
 }
 
 @riverpod

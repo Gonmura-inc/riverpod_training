@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
+import 'package:riverpod_training/features/auth/contoller/current_user_controller.dart';
 import 'package:riverpod_training/features/user/repo/storage_repo.dart';
 
 part 'storage_controller.g.dart';
@@ -9,17 +9,25 @@ part 'storage_controller.g.dart';
 @riverpod
 class StorageController extends _$StorageController {
   @override
-  build() {}
+  AsyncValue build() {
+    return const AsyncData(null);
+  }
 
   Future<String> uploadImageAndGetUrl(Uint8List uint8list) async {
-    return await ref
+    state = const AsyncLoading();
+    final url = await ref
         .read(storageRepoProvider.notifier)
-        .uploadImageAndGetUrl(ref.read(authControllerProvider)!.uid, uint8list);
+        .uploadImageAndGetUrl(
+            ref.read(currentUserControllerProvider)!.uid, uint8list);
+    state = const AsyncData(null);
+    return url;
   }
 
   Future<void> deleteImage() async {
+    state = const AsyncLoading();
     await ref
         .read(storageRepoProvider.notifier)
-        .deleteImage(ref.read(authControllerProvider)!.uid);
+        .deleteImage(ref.read(currentUserControllerProvider)!.uid);
+    state = const AsyncData(null);
   }
 }

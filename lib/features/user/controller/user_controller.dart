@@ -8,32 +8,44 @@ part 'user_controller.g.dart';
 @riverpod
 class UserController extends _$UserController {
   @override
-  build() {}
+  AsyncValue build() {
+    return const AsyncData(null);
+    // return AsyncLoading();
+  }
 
   Future<void> updateUserName(String newUserName, UserData myAccount) async {
+    state = const AsyncLoading();
     final UserData updateAccount = myAccount.copyWith(userName: newUserName);
     await ref.read(userRepoProvider.notifier).updateUser(updateAccount);
+    state = const AsyncData(null);
   }
 
   Future<UserData?> getAccount() async {
-    return await ref
+    state = const AsyncLoading();
+    final UserData? userData = await ref
         .read(userRepoProvider.notifier)
         .getAccount(ref.read(authRepoProvider)!.uid);
+    state = const AsyncData(null);
+    return userData;
   }
 
   Future<void> updateUserImageUrl(
       UserData myUserData, String downloadUrl) async {
+    state = const AsyncLoading();
     final UserData updateUserData = myUserData.copyWith(imageUrl: downloadUrl);
     await ref.read(userRepoProvider.notifier).updateUser(updateUserData);
+    state = const AsyncData(null);
   }
 
   Future<void> createUser() async {
+    state = const AsyncLoading();
     UserData addAccount = UserData(
       userId: ref.read(authRepoProvider)!.uid,
       userName: '',
       createdAt: Timestamp.now(),
     );
     await ref.read(userRepoProvider.notifier).createUser(addAccount);
+    state = const AsyncData(null);
   }
 }
 

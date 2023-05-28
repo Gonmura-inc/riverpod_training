@@ -146,12 +146,12 @@ final watchMyAccountControllerProvider =
 );
 
 typedef WatchMyAccountControllerRef = AutoDisposeStreamProviderRef<UserData?>;
-String _$userControllerHash() => r'd4d09b28381bf39784b83a777ab6e583e318a7c7';
+String _$userControllerHash() => r'b8bd2eda117eb75dfe58ff6c49efed0c3c8a39fb';
 
 /// See also [UserController].
 @ProviderFor(UserController)
 final userControllerProvider =
-    AutoDisposeNotifierProvider<UserController, dynamic>.internal(
+    AutoDisposeNotifierProvider<UserController, AsyncValue<dynamic>>.internal(
   UserController.new,
   name: r'userControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -161,5 +161,5 @@ final userControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$UserController = AutoDisposeNotifier<dynamic>;
+typedef _$UserController = AutoDisposeNotifier<AsyncValue<dynamic>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

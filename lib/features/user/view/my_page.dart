@@ -6,6 +6,7 @@ import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
 import 'package:riverpod_training/config/utils/margin/height_margin.dart';
 import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
+import 'package:riverpod_training/features/auth/contoller/current_user_controller.dart';
 import 'package:riverpod_training/features/like/controller/like_controller.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/task/controller/task_controller.dart';
@@ -132,7 +133,7 @@ class MyPage extends HookConsumerWidget {
                                   .read(authControllerProvider.notifier)
                                   .signIn(
                                       email: ref
-                                          .read(authControllerProvider)!
+                                          .read(currentUserControllerProvider)!
                                           .email!,
                                       password: passController.text);
                               if (result != 'success') {

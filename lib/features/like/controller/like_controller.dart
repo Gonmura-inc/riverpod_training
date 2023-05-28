@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/config/firebase/firebase_instance_provider.dart';
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
-import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
+import 'package:riverpod_training/features/auth/contoller/current_user_controller.dart';
 import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/like/repo/like_repo.dart';
@@ -12,29 +12,35 @@ part 'like_controller.g.dart';
 @riverpod
 class LikeController extends _$LikeController {
   @override
-  build() {}
+  AsyncValue build() {
+    return const AsyncData(null);
+  }
 
   Future<void> deleteLike(String taskId, String deleteLikeId) async {
+    state = const AsyncLoading();
     await ref.read(likeRepoProvider(taskId).notifier).deleteLike(deleteLikeId);
+    state = const AsyncData(null);
   }
 
   Future<void> addLike(
     String taskId,
   ) async {
+    state = const AsyncLoading();
     //いいねをする
     final Like addLikeData = Like(
       likeId: const Uuid().v4(),
       taskId: taskId,
-      userId: ref.read(authRepoProvider)!.uid,
+      userId: ref.read(currentUserControllerProvider)!.uid,
       createdAt: Timestamp.now(),
     );
     await ref.read(likeRepoProvider(taskId).notifier).addLike(addLikeData);
+    state = const AsyncData(null);
   }
 
   String getMyLikeId(List<Like> likeList) {
     String myLikeId = '';
     for (final Like likeData in likeList) {
-      if (likeData.userId == ref.read(authControllerProvider)!.uid) {
+      if (likeData.userId == ref.read(currentUserControllerProvider)!.uid) {
         myLikeId = likeData.likeId;
         break;
       }

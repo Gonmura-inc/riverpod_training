@@ -129,12 +129,12 @@ final watchMyLikesControllerProvider =
 );
 
 typedef WatchMyLikesControllerRef = AutoDisposeStreamProviderRef<List<Like>>;
-String _$likeControllerHash() => r'5f7b548729c49b5251cccb07bbc09ba7451588e1';
+String _$likeControllerHash() => r'33fde9df60000a75c30d120c863a340e32f4dcf5';
 
 /// See also [LikeController].
 @ProviderFor(LikeController)
 final likeControllerProvider =
-    AutoDisposeNotifierProvider<LikeController, dynamic>.internal(
+    AutoDisposeNotifierProvider<LikeController, AsyncValue<dynamic>>.internal(
   LikeController.new,
   name: r'likeControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -144,5 +144,5 @@ final likeControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$LikeController = AutoDisposeNotifier<dynamic>;
+typedef _$LikeController = AutoDisposeNotifier<AsyncValue<dynamic>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
