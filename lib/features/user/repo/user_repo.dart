@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/config/firebase/firebase_instance_provider.dart';
 import 'package:riverpod_training/config/utils/keys/firebase_key.dart';
-import 'package:riverpod_training/features/user/data_model/userdata.dart';
+import 'package:riverpod_training/features/user/data_model/user_data.dart';
 
 part 'user_repo.g.dart';
 

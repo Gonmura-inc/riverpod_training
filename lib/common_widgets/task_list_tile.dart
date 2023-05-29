@@ -8,7 +8,7 @@ import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/task/controller/task_controller.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
 import 'package:riverpod_training/features/user/controller/user_controller.dart';
-import 'package:riverpod_training/features/user/data_model/userdata.dart';
+import 'package:riverpod_training/features/user/data_model/user_data.dart';
 
 class TaskListTile extends ConsumerWidget {
   const TaskListTile({

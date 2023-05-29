@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
-import 'package:riverpod_training/features/user/data_model/userdata.dart';
+import 'package:riverpod_training/features/user/data_model/user_data.dart';
 import 'package:riverpod_training/features/user/repo/user_repo.dart';
 part 'user_controller.g.dart';
 

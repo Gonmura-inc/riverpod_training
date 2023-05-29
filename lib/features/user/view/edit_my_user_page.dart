@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
 import 'package:riverpod_training/features/user/controller/user_controller.dart';
-import 'package:riverpod_training/features/user/data_model/userdata.dart';
+import 'package:riverpod_training/features/user/data_model/user_data.dart';
 
 class EditMyUserPage extends HookConsumerWidget {
   const EditMyUserPage({super.key});

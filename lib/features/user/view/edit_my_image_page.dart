@@ -8,7 +8,7 @@ import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
 import 'package:riverpod_training/config/utils/margin/height_margin.dart';
 import 'package:riverpod_training/features/user/controller/storage_controller.dart';
 import 'package:riverpod_training/features/user/controller/user_controller.dart';
-import 'package:riverpod_training/features/user/data_model/userdata.dart';
+import 'package:riverpod_training/features/user/data_model/user_data.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
 
 class EditMyImagePage extends HookConsumerWidget {

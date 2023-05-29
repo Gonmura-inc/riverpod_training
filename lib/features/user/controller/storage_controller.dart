@@ -1,7 +1,6 @@
 import 'dart:typed_data';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:riverpod_training/features/auth/contoller/current_user_controller.dart';
+import 'package:riverpod_training/features/auth/controller/current_user_controller.dart';
 import 'package:riverpod_training/features/user/repo/storage_repo.dart';
 
 part 'storage_controller.g.dart';

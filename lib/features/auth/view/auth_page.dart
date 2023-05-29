@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
-import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
+import 'package:riverpod_training/features/auth/controller/auth_controller.dart';
 import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
 

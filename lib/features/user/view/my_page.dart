@@ -5,16 +5,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/fontStyle/font_size.dart';
 import 'package:riverpod_training/config/utils/margin/height_margin.dart';
-import 'package:riverpod_training/features/auth/contoller/auth_controller.dart';
-import 'package:riverpod_training/features/auth/contoller/current_user_controller.dart';
+import 'package:riverpod_training/features/auth/controller/auth_controller.dart';
 import 'package:riverpod_training/features/like/controller/like_controller.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
 import 'package:riverpod_training/features/task/controller/task_controller.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
 import 'package:riverpod_training/features/user/controller/user_controller.dart';
-import 'package:riverpod_training/features/user/data_model/userdata.dart';
+import 'package:riverpod_training/features/user/data_model/user_data.dart';
 import 'package:riverpod_training/functions/show_snack_bar.dart';
 import 'package:riverpod_training/common_widgets/task_list_tile.dart';
+
+import '../../auth/controller/current_user_controller.dart';
 
 class MyPage extends HookConsumerWidget {
   const MyPage({super.key});
