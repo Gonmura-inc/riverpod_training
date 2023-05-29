@@ -5,6 +5,7 @@ import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/config/utils/margin/width_margin.dart';
 import 'package:riverpod_training/features/like/controller/like_controller.dart';
 import 'package:riverpod_training/features/like/data_model/like.dart';
+import 'package:riverpod_training/features/task/controller/task_controller.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
 import 'package:riverpod_training/features/user/controller/user_controller.dart';
 import 'package:riverpod_training/features/user/data_model/userdata.dart';
@@ -78,6 +79,21 @@ class TaskListTile extends ConsumerWidget {
                 const Text('いいね数'),
                 WidthMargin.small,
                 Text('${likeList.length}'),
+                WidthMargin.small,
+                IconButton(
+                  onPressed: () async {
+                    //likesサブコレクションの削除
+                    await ref
+                        .read(likeControllerProvider.notifier)
+                        .deleteLikes(taskData.taskId);
+
+                    //todoドキュメントの削除
+                    await ref
+                        .read(taskControllerProvider.notifier)
+                        .deleteTask(taskData);
+                  },
+                  icon: const Icon(Icons.delete),
+                ),
               ],
             );
           },

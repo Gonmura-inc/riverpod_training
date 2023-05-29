@@ -227,7 +227,7 @@ class WatchTaskControllerProvider extends AutoDisposeStreamProvider<Task> {
   }
 }
 
-String _$taskControllerHash() => r'dc626987172898a95817a49e548ee460ed9bcd9a';
+String _$taskControllerHash() => r'b7dac4d919ec8f660a79047c375210eac97998f6';
 
 /// See also [TaskController].
 @ProviderFor(TaskController)
@@ -243,4 +243,19 @@ final taskControllerProvider =
 );
 
 typedef _$TaskController = AutoDisposeNotifier<AsyncValue<dynamic>>;
+String _$taskListHash() => r'751d3c7fbc37cd3520bd62b924f6c0f129da2c07';
+
+/// See also [TaskList].
+@ProviderFor(TaskList)
+final taskListProvider =
+    AutoDisposeAsyncNotifierProvider<TaskList, List<Task>>.internal(
+  TaskList.new,
+  name: r'taskListProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$taskListHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TaskList = AutoDisposeAsyncNotifier<List<Task>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -6,7 +6,7 @@ part of 'like_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$likeRepoHash() => r'1b237d748665db661f31571142f710f4682cdbe8';
+String _$likeRepoHash() => r'90a278333eb8d471112fe96d221845a8828d5029';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -47,6 +47,21 @@ class LikeController extends _$LikeController {
     }
     return myLikeId;
   }
+
+  //likesコレクションのデータを取得
+  Future<List<Like>> getLikes(String taskId) async {
+    return ref.read(likeRepoProvider(taskId).notifier).getLikes();
+  }
+
+  //likesコレクションのデータを取得して削除
+  Future<void> deleteLikes(String taskId) async {
+    List<Like> likeList = await getLikes(taskId);
+    for (final Like likeData in likeList) {
+      await ref
+          .read(likeRepoProvider(taskId).notifier)
+          .deleteLike(likeData.likeId);
+    }
+  }
 }
 
 @riverpod

@@ -24,10 +24,12 @@ class TaskRepo extends _$TaskRepo {
 
   //StreamでtaskListを取得
   Stream<List<Task>> watchTasks() {
-    return state
+    final query = state
+        .where(FirebaseTasksKey.createdAt, isGreaterThan: Timestamp.now())
         .orderBy(FirebaseTasksKey.createdAt, descending: true)
-        .snapshots()
-        .map(
+        .snapshots();
+
+    return query.map(
       (QuerySnapshot<Task> snapshot) {
         return snapshot.docs.map(
           (QueryDocumentSnapshot<Task> doc) {
@@ -39,8 +41,18 @@ class TaskRepo extends _$TaskRepo {
   }
 
   //FutureでtaskListを取得
-  Future<List<Task>> getTasks() async {
-    final snapshot = await state.get();
+  Future<List<Task>> getTasks(List<Task> taskList) async {
+    var query = state
+        .orderBy(
+          FirebaseTasksKey.createdAt,
+          descending: true,
+        )
+        .limit(5);
+    if (taskList.isNotEmpty) {
+      query = query.startAfter([taskList.last.createdAt]);
+    }
+    final snapshot = await query.get();
+
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 

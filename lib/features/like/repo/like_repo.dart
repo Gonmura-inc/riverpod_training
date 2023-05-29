@@ -39,5 +39,12 @@ class LikeRepo extends _$LikeRepo {
         );
   }
 
+  Future<List<Like>> getLikes() {
+    return state.get().then(
+          (QuerySnapshot<Like> snapshot) =>
+              snapshot.docs.map((doc) => doc.data()).toList(),
+        );
+  }
+
   //自分がいいねしたlikeDocumentのstream取得
 }
