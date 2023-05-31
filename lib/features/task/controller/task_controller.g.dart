@@ -227,6 +227,23 @@ class WatchTaskControllerProvider extends AutoDisposeStreamProvider<Task> {
   }
 }
 
+String _$watchFiveTasksControllerHash() =>
+    r'99cd3361810224dba8f821955211ede0ba03a95b';
+
+/// See also [watchFiveTasksController].
+@ProviderFor(watchFiveTasksController)
+final watchFiveTasksControllerProvider =
+    AutoDisposeStreamProvider<List<Task>>.internal(
+  watchFiveTasksController,
+  name: r'watchFiveTasksControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$watchFiveTasksControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef WatchFiveTasksControllerRef = AutoDisposeStreamProviderRef<List<Task>>;
 String _$taskControllerHash() => r'dc626987172898a95817a49e548ee460ed9bcd9a';
 
 /// See also [TaskController].
@@ -243,4 +260,20 @@ final taskControllerProvider =
 );
 
 typedef _$TaskController = AutoDisposeNotifier<AsyncValue<dynamic>>;
+String _$limitControllerHash() => r'e3a9e42b99aff398e08b78065b5c05bd57a43036';
+
+/// See also [LimitController].
+@ProviderFor(LimitController)
+final limitControllerProvider =
+    AutoDisposeNotifierProvider<LimitController, int>.internal(
+  LimitController.new,
+  name: r'limitControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$limitControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$LimitController = AutoDisposeNotifier<int>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -14,27 +14,27 @@ class TasksScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isMyTasks = useState(false);
     return Scaffold(
-      appBar: AppBar(
-        leading: ref.watch(watchMyTasksControllerProvider).when(
-          error: (error, stackTrace) {
-            return const SizedBox.shrink();
-          },
-          loading: () {
-            return const SizedBox.shrink();
-          },
-          data: (List<Task> myTaskList) {
-            return Center(child: Text('タスク数：${myTaskList.length}'));
-          },
-        ),
-        title: const Text("タスク一覧画面"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                isMyTasks.value = !isMyTasks.value;
-              },
-              icon: const Icon(Icons.change_circle))
-        ],
-      ),
+      // appBar: AppBar(
+      //   leading: ref.watch(watchMyTasksControllerProvider).when(
+      //     error: (error, stackTrace) {
+      //       return const SizedBox.shrink();
+      //     },
+      //     loading: () {
+      //       return const SizedBox.shrink();
+      //     },
+      //     data: (List<Task> myTaskList) {
+      //       return Center(child: Text('タスク数：${myTaskList.length}'));
+      //     },
+      //   ),
+      //   title: const Text("タスク一覧画面"),
+      //   actions: [
+      //     IconButton(
+      //         onPressed: () {
+      //           isMyTasks.value = !isMyTasks.value;
+      //         },
+      //         icon: const Icon(Icons.change_circle))
+      //   ],
+      // ),
       body: (isMyTasks.value)
           ?
           //自分のタスク

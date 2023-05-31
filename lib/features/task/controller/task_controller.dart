@@ -57,3 +57,22 @@ Stream<Task> watchTaskController(WatchTaskControllerRef ref, String taskId) {
         (DocumentSnapshot<Task> snapshot) => snapshot.data()!,
       );
 }
+
+@riverpod
+Stream<List<Task>> watchFiveTasksController(WatchFiveTasksControllerRef ref) {
+  final int limit = ref.watch(limitControllerProvider);
+  return ref.read(taskRepoProvider.notifier).watchFiveTasks(limit);
+}
+
+@riverpod
+class LimitController extends _$LimitController {
+  @override
+  int build() {
+    return 5;
+  }
+
+  void increment() {
+    //limitを+5する
+    state = state + 5;
+  }
+}

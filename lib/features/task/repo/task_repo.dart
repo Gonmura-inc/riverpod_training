@@ -89,4 +89,38 @@ class TaskRepo extends _$TaskRepo {
       },
     );
   }
+
+  //Streamで5件ずつtaskListを取得
+  Stream<List<Task>> watchFiveTasks(int limit) {
+    return state
+        .orderBy(FirebaseTasksKey.createdAt, descending: true)
+        .limit(limit)
+        .snapshots()
+        .map(
+      (QuerySnapshot<Task> snapshot) {
+        return snapshot.docs.map(
+          (QueryDocumentSnapshot<Task> doc) {
+            return doc.data();
+          },
+        ).toList();
+      },
+    );
+  }
 }
+///Future(get)
+///リアルタイム監視できない
+///30件ずつとる
+///30,30,30,30,30
+///1~30,31~60,61~90,91~120,121~150
+///30,60,90,120,150
+///150件目にたどり着くまでに150回の読み取りをしている
+///
+///Stream(snapshot)
+///リアルタイム監視
+///30,60,90,120,150
+///1~30,1~60,1~90,1~120,1~150
+///30,90,180,300,450
+///150件目にたどり着くまでに450回の読み取りをしている
+///50,100,150
+///50,150,300
+///150件目にたどり着くまでに300回の読み取りをしている

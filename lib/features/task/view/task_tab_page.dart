@@ -10,7 +10,7 @@ class TaskTabPage extends HookConsumerWidget {
   final Widget child;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final selectedIndex = useState(0);
+    final selectedIndex = useState(0);
     final tabs = useState([
       const Tab(text: '一括読み込み'),
       const Tab(text: '5件ずつ読み込み'),
@@ -29,18 +29,19 @@ class TaskTabPage extends HookConsumerWidget {
       //現在のパス取得
       final String currentPath = ref.read(goRouterProvider).location;
       if (currentPath == AppRoute.tasks.path) {
-        tabController.index = 0;
+        selectedIndex.value = 0;
       } else if (currentPath == AppRoute.fiveTasks.path) {
-        tabController.index = 1;
+        selectedIndex.value = 1;
       } else {
-        tabController.index = 0;
+        selectedIndex.value = 0;
       }
       return null;
     }, [
       /// ここに変更を監視したい変数を入れる
-      ref.watch(goRouterProvider).location,
+      ref.read(goRouterProvider).location,
     ]);
     return DefaultTabController(
+      initialIndex: selectedIndex.value,
       length: tabs.value.length,
       child: Scaffold(
         appBar: AppBar(
