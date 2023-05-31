@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
+import 'package:riverpod_training/features/task/controller/task_list_controller.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
 import 'package:riverpod_training/features/task/repo/task_repo.dart';
 import 'package:uuid/uuid.dart';
@@ -32,7 +33,7 @@ class TaskController extends _$TaskController {
       title: title,
     );
     await ref.read(taskRepoProvider.notifier).updateTask(editTaskData);
-    ref.read(taskListProvider.notifier).updateTask(taskData);
+    ref.read(taskListControllerProvider.notifier).updateTask(taskData);
     state = const AsyncData(null);
   }
 
@@ -40,47 +41,8 @@ class TaskController extends _$TaskController {
   Future<void> deleteTask(Task taskData) async {
     state = const AsyncLoading();
     await ref.read(taskRepoProvider.notifier).deleteTask(taskData.taskId);
-    ref.read(taskListProvider.notifier).deleteTask(taskData);
+    ref.read(taskListControllerProvider.notifier).deleteTask(taskData);
     state = const AsyncData(null);
-  }
-}
-
-@riverpod
-class TaskList extends _$TaskList {
-  @override
-  Future<List<Task>> build() async {
-    return ref.read(taskRepoProvider.notifier).getTasks([]);
-  }
-
-  Future<void> getTasks() async {
-    state = const AsyncLoading();
-    final List<Task> addTaskList =
-        await ref.read(taskRepoProvider.notifier).getTasks(state.value!);
-    state.value!.addAll(addTaskList);
-    state = AsyncData(state.value!);
-  }
-
-  //タスクリストからタスクを削除
-  Future<void> deleteTask(Task taskData) async {
-    state = const AsyncLoading();
-    state.value!.remove(taskData);
-    state = AsyncData(state.value!);
-  }
-
-  //タスクリストから特定のタスクを更新
-  Future<void> updateTask(Task taskData) async {
-    state = const AsyncLoading();
-    //タスクデータを取得
-    final Task updateTaskData =
-        await ref.read(taskRepoProvider.notifier).getTask(taskData.taskId);
-
-    final int index = state.value!.indexWhere(
-      (Task task) {
-        return task.taskId == taskData.taskId;
-      },
-    );
-    state.value![index] = updateTaskData;
-    state = AsyncData(state.value!);
   }
 }
 

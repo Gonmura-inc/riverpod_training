@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_training/features/task/controller/task_controller.dart';
+import 'package:riverpod_training/features/task/controller/task_list_controller.dart';
 import 'package:riverpod_training/features/task/data_model/task.dart';
 import 'package:riverpod_training/common_widgets/task_list_tile.dart';
 
@@ -22,7 +23,7 @@ class TasksScreen extends HookConsumerWidget {
                 scrollController.position.maxScrollExtent &&
             !scrollController.position.outOfRange) {
           //スクロールが一番下まできたときにやりたいことを書く
-          ref.read(taskListProvider.notifier).getTasks();
+          ref.read(taskListControllerProvider.notifier).getTasks();
         }
       });
       return null;
@@ -101,7 +102,7 @@ class TasksScreen extends HookConsumerWidget {
                   ),
                   const Divider(height: 0.5),
                   //開いた時より古いデータはgetで取得する
-                  ref.watch(taskListProvider).when(
+                  ref.watch(taskListControllerProvider).when(
                         skipError: false,
                         //初期描画時のローディングをスキップするか
                         skipLoadingOnRefresh: true,
