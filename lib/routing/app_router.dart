@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_training/config/utils/enum/router_enum.dart';
 import 'package:riverpod_training/features/auth/repo/auth_repo.dart';
+import 'package:riverpod_training/features/task/view/five_tasks_page.dart';
+import 'package:riverpod_training/features/task/view/task_tab_page.dart';
 import 'package:riverpod_training/routing/go_router_refresh_streaml.dart';
 import 'package:riverpod_training/features/user/view/edit_my_image_page.dart';
 import 'package:riverpod_training/features/user/view/edit_my_user_page.dart';
@@ -18,7 +20,8 @@ import 'package:riverpod_training/features/user/view/users_page.dart';
 part 'app_router.g.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorKey = GlobalKey<NavigatorState>();
+final _shellBottomNavigatorKey = GlobalKey<NavigatorState>();
+final _shellTaskTabNavigatorKey = GlobalKey<NavigatorState>();
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
@@ -49,39 +52,56 @@ GoRouter goRouter(GoRouterRef ref) {
         },
       ),
       ShellRoute(
-          navigatorKey: _shellNavigatorKey,
+          navigatorKey: _shellBottomNavigatorKey,
           builder: (context, state, child) {
             return BottomNavigationPage(child: child);
           },
           routes: [
-            GoRoute(
-              path: AppRoute.tasks.path,
-              name: AppRoute.tasks.name,
-              pageBuilder: (context, state) {
-                return const NoTransitionPage(child: TasksScreen());
+            //taskページを切り替えるタブのshellRoute
+            ShellRoute(
+              navigatorKey: _shellTaskTabNavigatorKey,
+              builder: (context, state, child) {
+                return TaskTabPage(child: child);
               },
               routes: [
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
-                  path: AppRoute.newTask.path,
-                  name: AppRoute.newTask.name,
+                  path: AppRoute.tasks.path,
+                  name: AppRoute.tasks.name,
                   pageBuilder: (context, state) {
-                    return const MaterialPage(
-                        fullscreenDialog: true, child: AddOrEditTaskPage());
+                    return const NoTransitionPage(child: TasksScreen());
                   },
+                  routes: [
+                    GoRoute(
+                      parentNavigatorKey: _rootNavigatorKey,
+                      path: AppRoute.newTask.path,
+                      name: AppRoute.newTask.name,
+                      pageBuilder: (context, state) {
+                        return const MaterialPage(
+                            fullscreenDialog: true, child: AddOrEditTaskPage());
+                      },
+                    ),
+                    GoRoute(
+                      parentNavigatorKey: _rootNavigatorKey,
+                      path: AppRoute.editTask.path,
+                      name: AppRoute.editTask.name,
+                      pageBuilder: (context, state) {
+                        final taskId =
+                            state.queryParameters['taskId'] as String;
+                        return MaterialPage(
+                          fullscreenDialog: true,
+                          child: AddOrEditTaskPage(
+                            taskId: taskId,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
-                  path: AppRoute.editTask.path,
-                  name: AppRoute.editTask.name,
+                  path: AppRoute.fiveTasks.path,
+                  name: AppRoute.fiveTasks.name,
                   pageBuilder: (context, state) {
-                    final taskId = state.queryParameters['taskId'] as String;
-                    return MaterialPage(
-                      fullscreenDialog: true,
-                      child: AddOrEditTaskPage(
-                        taskId: taskId,
-                      ),
-                    );
+                    return const NoTransitionPage(child: FiveTasksPage());
                   },
                 ),
               ],

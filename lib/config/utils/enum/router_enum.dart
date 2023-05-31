@@ -1,6 +1,7 @@
 enum AppRoute {
   login,
   tasks,
+  fiveTasks,
   newTask,
   auth,
   editTask,
@@ -17,6 +18,8 @@ extension AppRouteExtention on AppRoute {
         return "/auth";
       case AppRoute.tasks:
         return "/tasks";
+      case AppRoute.fiveTasks:
+        return "/fiveTasks";
       case AppRoute.newTask:
         return "newTask";
       case AppRoute.editTask:
